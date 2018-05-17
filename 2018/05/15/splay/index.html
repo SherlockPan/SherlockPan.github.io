@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB;
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB;
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB; 
+        border-left-color: #1E92FB; 
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/blog/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/blog/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言：平衡树是一种很有用的数据结构，在很多高级数据结构中都有很多用处。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Splay 文艺平衡树">
+<meta property="og:url" content="http://yoursite.com/2018/05/15/splay/index.html">
+<meta property="og:site_name" content="Sherlock小蒟蒻">
+<meta property="og:description" content="前言：平衡树是一种很有用的数据结构，在很多高级数据结构中都有很多用处。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/FI4daIq.png">
+<meta property="og:image" content="https://i.imgur.com/Euc5H85.png">
+<meta property="og:image" content="https://i.imgur.com/W31Iypy.png">
+<meta property="og:image" content="https://i.imgur.com/voDuGtv.jpg">
+<meta property="og:updated_time" content="2018-05-15T12:53:49.125Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Splay 文艺平衡树">
+<meta name="twitter:description" content="前言：平衡树是一种很有用的数据结构，在很多高级数据结构中都有很多用处。">
+<meta name="twitter:image" content="https://i.imgur.com/FI4daIq.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/15/splay/"/>
+
+
+
+
+
+  <title>Splay 文艺平衡树 | Sherlock小蒟蒻</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sherlock小蒟蒻</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/blog/2018/05/15/splay/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sherlock Pan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sherlock小蒟蒻">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Splay 文艺平衡树</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-15T13:36:12+08:00">
+                2018-05-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,491
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>平衡树是一种很有用的数据结构，在很多高级数据结构中都有很多用处。<br><a id="more"></a><br>我们需要熟练掌握 Splay树 虽然它的代码很长很长（一百多行吧…</p>
+<hr>
+<h3 id="简述Splay树："><a href="#简述Splay树：" class="headerlink" title="简述Splay树："></a>简述Splay树：</h3><ul>
+<li>Splay是一种数据结构 ( 废话 ），它的每个节点的的左儿子比这个节点小，每个节点的右儿子比这个节点大，跟 treap 差不多，但是实现的时间可能要比 treap 慢。</li>
+<li>树的旋转是 splay 的基础，对于一个二叉查找树来说，树的旋转不破坏查找树的结构</li>
+</ul>
+<h3 id="Splaying"><a href="#Splaying" class="headerlink" title="Splaying:"></a>Splaying:</h3><ul>
+<li>简述就是要口糊的，现在我们来看看 Splay Tree 的基本操作Splaying</li>
+<li>为了让被查询的条目更接近树根，Splay-Tree 采用的树的旋转操作，同时保证了二叉排序树的性质不变</li>
+<li>我们设要旋转的节点为 x ,x 的父亲节点是 p ， p 的父亲节点为 y ,我们在旋转的时候要考虑<strong>三种情况</strong>：</li>
+<li>节点 x 是 p 的左儿子还是右儿子</li>
+<li>节点 p 是否为根节点，如果不是的话，可以进行旋转操作</li>
+<li>p 为 y 的左儿子还是右儿子</li>
+<li>旋转的时候还有三种<strong>基本操作</strong>：</li>
+<li>当 p 为根节点时，若 x 为 p 的左孩子时右旋，反之左旋</li>
+</ul>
+<p><img src="https://i.imgur.com/FI4daIq.png" alt=""></p>
+<ul>
+<li>当 p 不为根节点时，且 x ，p 同为左儿子或者右儿子时，若同为左儿子，则进行右旋，反之左旋</li>
+</ul>
+<p><img src="https://i.imgur.com/Euc5H85.png" alt=""></p>
+<ul>
+<li>当 p 不为根节点时，且 x , p 不同为左儿子或者右儿子时，若 p 为左儿子 x 为右儿子，先将 x 左旋再右旋，若 p 为右儿子 x 为左儿子时，先将 x 右旋再左旋</li>
+</ul>
+<p><img src="https://i.imgur.com/W31Iypy.png" alt=""></p>
+<ul>
+<li>我觉得旋转的操作还是很好写的，列出那么多情况只是方便理解罢了…会了 Splaying ，我觉得 Splay-Tree 已经会了一半了…</li>
+<li>还有一件很重要的事  （我终于会挂图片了Makedown真坑…）</li>
+</ul>
+<hr>
+<h3 id="Splay-Tree-的具体操作："><a href="#Splay-Tree-的具体操作：" class="headerlink" title="Splay-Tree 的具体操作："></a>Splay-Tree 的具体操作：</h3><h5 id="access："><a href="#access：" class="headerlink" title="access："></a>access：</h5><ul>
+<li>access（i）表示我们返回 i 的指针，如果点 i 出现在 Splay-Tree 中，否则我们返回空指针</li>
+<li>我们设树根为 root ，从树根向下寻找 若找到含有 i 的节点 x ，就Splaying x ,返回 x 的指针，结束访问操作</li>
+<li>如果我们遇到了空指针，代表我们要访问的 i 不在 Splay-Tree 中，我们就只能在树的最后一个非空节点进行一次 Splaying 操作，然后返回空指针</li>
+<li>另外，如果这一棵树是空的，我们忽略 Splaying 的操作…</li>
+</ul>
+<h5 id="join："><a href="#join：" class="headerlink" title="join："></a>join：</h5><ul>
+<li>我把树的插入和删除操作放在了后面，我们先来看一下合并 join 操作和分裂 split 操作</li>
+<li>join 是将树 T1，与 T2 合并，包含两棵树的所有节点，并返回合并后的树</li>
+<li>操作先假设 T1 的所有节点都小于 T2，操作结束之后会销毁 T1,T2</li>
+<li>我们先访问 T1 中的最大节点 i ，访问结束后，i 就变成了 T1 的根节点，它的右孩子为空。然后我们将 T2 作为 i 的右子树（这时 i 已经成为 T1 的根节点） 并返回完成后的新树，完成操作</li>
+</ul>
+<h5 id="split："><a href="#split：" class="headerlink" title="split："></a>split：</h5><ul>
+<li>我们分裂一棵树并且返回两棵树 T1 和 T2 ，T1 包括所有小于等于 i    的节点，T2 包含所有大于 i 的节点，操作完成后销毁原树</li>
+<li>我们先访问（access）i ，然后再根据新节点的左儿子和右儿子的值来进行切断操作，并返回形成的两棵树…</li>
+</ul>
+<h5 id="insert："><a href="#insert：" class="headerlink" title="insert："></a>insert：</h5><ul>
+<li>现在我们看看插入和删除的操作</li>
+<li>insert（i，T）表示我们将点 i 插入到树 T 中，我们首先执行 split 操作，然后将 T 换成一个包含 i 的根节点的新树，这个根节点的左右两棵子树就是 split 返回的 T1 和 T2</li>
+</ul>
+<h5 id="delete："><a href="#delete：" class="headerlink" title="delete："></a>delete：</h5><ul>
+<li>从树中删除节点 i ，我们首先执行访问（access） i ，然后将 T 变成 i 的左子树和右子树合并 （join） 之后的新树</li>
+<li>我觉得在理解合并（join)和分裂（split）操作之后是很容易理解插入（insert）和删除（delete）操作的</li>
+<li>另外，在基础操作理解之后，我们来看看更优的插入和删除操作</li>
+</ul>
+<h5 id="更优的插入（insert）和删除（delete）："><a href="#更优的插入（insert）和删除（delete）：" class="headerlink" title="更优的插入（insert）和删除（delete）："></a>更优的插入（insert）和删除（delete）：</h5><ul>
+<li>insert：我们先查找 i ，把遇到的空指针替换成一个含有 i 的新节点，再 Splaying 这个由空节点替换后的节点</li>
+<li>delete：我们查找含有 i 的节点，设这个节点为 x ，它的父亲节点为 y ,把 x 的左右子树合并之后，再把 y 进行 Splaying 操作</li>
+</ul>
+<ul>
+<li>很多东西我也不多做解释了，毕竟手码那么多字也不易，我觉得我写的还是比较容易看懂的。只要认真用心看的话，以上的操作是能够理解的</li>
+</ul>
+<hr>
+<h3 id="Splay-Tree的区间操作："><a href="#Splay-Tree的区间操作：" class="headerlink" title="Splay-Tree的区间操作："></a>Splay-Tree的区间操作：</h3><ul>
+<li>有了以上那么多的操作方法，相信对 Splay-Tree 的理解已经很深了，我们现在只需要学习对 Splay-Tree 的查询操作，就可以运用 Splay-Tree 解题了</li>
+</ul>
+<h5 id="无用的小标题…"><a href="#无用的小标题…" class="headerlink" title="无用的小标题…"></a>无用的小标题…</h5><ul>
+<li>实际上，Splay-Tree 的中序遍历，即为我们要维护的数列，我们要如何在 Splay-Tree 中表示出某个区间呢</li>
+<li>假设我们现在要提取区间 [a,b]，我们先将 a 前面一个数对应的节点旋转到根，将 b 的后面一个数对应的节点转到根的右边，可以发现，这时候根右边的左子树就对应了区间 [a,b]，我们来看一张图…</li>
+</ul>
+<p><img src="https://i.imgur.com/voDuGtv.jpg" alt=""></p>
+<ul>
+<li>是不是很好理解？然后我们利用以上的区间操作就可以实现线段树的功能，在这里我们不做多解释，就讲一下<strong>区间修改</strong></li>
+<li>我们需要用到类似于线段树的延迟标记，</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2018/05/14/左偏树/" rel="next" title="左偏树">
+                <i class="fa fa-chevron-left"></i> 左偏树
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2018/05/16/主席树整体二分/" rel="prev" title="主席树与整体二分浅析">
+                主席树与整体二分浅析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/blog/images/avatar.jpg"
+                alt="Sherlock Pan" />
+            
+              <p class="site-author-name" itemprop="name">Sherlock Pan</p>
+              <p class="site-description motion-element" itemprop="description">每个人为不同的理由戴着面具说谎，动机也只有一个名字那叫做欲望</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/6002851702/profile?topnav=1&wvr=6" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-globe"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/sherlock-76-85/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言："><span class="nav-number">1.</span> <span class="nav-text">前言：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简述Splay树："><span class="nav-number">2.</span> <span class="nav-text">简述Splay树：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Splaying"><span class="nav-number">3.</span> <span class="nav-text">Splaying:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Splay-Tree-的具体操作："><span class="nav-number">4.</span> <span class="nav-text">Splay-Tree 的具体操作：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#access："><span class="nav-number">4.0.1.</span> <span class="nav-text">access：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#join："><span class="nav-number">4.0.2.</span> <span class="nav-text">join：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#split："><span class="nav-number">4.0.3.</span> <span class="nav-text">split：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#insert："><span class="nav-number">4.0.4.</span> <span class="nav-text">insert：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#delete："><span class="nav-number">4.0.5.</span> <span class="nav-text">delete：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#更优的插入（insert）和删除（delete）："><span class="nav-number">4.0.6.</span> <span class="nav-text">更优的插入（insert）和删除（delete）：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Splay-Tree的区间操作："><span class="nav-number">5.</span> <span class="nav-text">Splay-Tree的区间操作：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#无用的小标题…"><span class="nav-number">5.0.1.</span> <span class="nav-text">无用的小标题…</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sherlock Pan</span>
+
+  
+</div>
+
+
+
+  <div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共8.8k字</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

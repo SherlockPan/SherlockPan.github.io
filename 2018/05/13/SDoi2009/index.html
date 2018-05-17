@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB;
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB;
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB; 
+        border-left-color: #1E92FB; 
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/blog/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/blog/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="暴力   莫队  树状数组本蒟蒻的第一篇博客对博客的格式还不是很熟悉... 我们回到正题，现在先来看一下题面">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SDOI2009  HH的项链">
+<meta property="og:url" content="http://yoursite.com/2018/05/13/SDoi2009/index.html">
+<meta property="og:site_name" content="Sherlock小蒟蒻">
+<meta property="og:description" content="暴力   莫队  树状数组本蒟蒻的第一篇博客对博客的格式还不是很熟悉... 我们回到正题，现在先来看一下题面">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-17T08:19:29.213Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SDOI2009  HH的项链">
+<meta name="twitter:description" content="暴力   莫队  树状数组本蒟蒻的第一篇博客对博客的格式还不是很熟悉... 我们回到正题，现在先来看一下题面">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/13/SDoi2009/"/>
+
+
+
+
+
+  <title>SDOI2009  HH的项链 | Sherlock小蒟蒻</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sherlock小蒟蒻</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/blog/2018/05/13/SDoi2009/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sherlock Pan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sherlock小蒟蒻">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SDOI2009  HH的项链</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-13T19:18:28+08:00">
+                2018-05-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,633
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="暴力-莫队-树状数组"><a href="#暴力-莫队-树状数组" class="headerlink" title="暴力   莫队  树状数组"></a>暴力   莫队  树状数组</h3><pre><code>本蒟蒻的第一篇博客对博客的格式还不是很熟悉...
+我们回到正题，现在先来看一下题面
+</code></pre><a id="more"></a>
+<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>HH 有一串由各种漂亮的贝壳组成的项链。HH 相信不同的贝壳会带来好运，所以每次散步完后，他都会随意取出一段贝壳，思考它们所表达的含义。HH 不断地收集新的贝壳，因此，他的项链变得越来越长。有一天，他突然提出了一个问题：某一段贝壳中，包含了多少种不同的贝壳？这个问题很难回答……因为项链实在是太长了。于是，他只好求助睿智的你，来解决这个问题。</p>
+<h3 id="输入输出格式"><a href="#输入输出格式" class="headerlink" title="输入输出格式"></a>输入输出格式</h3><h5 id="输入格式："><a href="#输入格式：" class="headerlink" title="输入格式："></a>输入格式：</h5><p>第一行：一个整数N，表示项链的长度。</p>
+<p>第二行：N 个整数，表示依次表示项链中贝壳的编号（编号为0 到1000000 之间的整数）。</p>
+<p>第三行：一个整数M，表示HH 询问的个数。</p>
+<p>接下来M 行：每行两个整数，L 和R（1 ≤ L ≤ R ≤ N），表示询问的区间。</p>
+<h5 id="输出格式："><a href="#输出格式：" class="headerlink" title="输出格式："></a>输出格式：</h5><p>M 行，每行一个整数，依次表示询问对应的答案。</p>
+<h2 id="解题分析"><a href="#解题分析" class="headerlink" title="解题分析"></a>解题分析</h2><h4 id="暴力"><a href="#暴力" class="headerlink" title="暴力"></a>暴力</h4><ul>
+<li>初看题目，打暴力肯定是会T的（废话），初步估计40分…</li>
+<li>暴力枚举询问的空间，每次清空用于记忆的数组…</li>
+</ul>
+<hr>
+<h4 id="莫队-80分"><a href="#莫队-80分" class="headerlink" title="莫队  80分"></a>莫队  80分</h4><ul>
+<li>看到这道题其实很容易想到是莫队的…</li>
+<li>莫队是基于分块思想的一种算法，很好理解…</li>
+<li>我们先把询问离线，之后再排个序…</li>
+<li>对于区间 l ~ r ,如果我们已知在这个区间里不同的贝壳种类有sum个，那么对于区间 l ~ r+1,或者区间 l-1 ~ r 就可以在O（1）的时间复杂度下得出对于 l-1 ~ r 的sum的值</li>
+<li>所以我们把询问的区间排个序，使 l 和 r 尽可能少的移动，就可以比暴力少算很多次，这一段很好理解吧</li>
+<li>但是考虑最不优的询问，如果询问的区间一个在数列的最左边，一个最右边，这样进行 l 和 r 的转移，时间复杂度就是要O（n)，还不如写暴力</li>
+<li>因此我们用上分块的思想，把这一串数列分成 sqrt( n ) 块，这样时间复杂度就会降低很多。（分块不懂？！那你还学莫队！！）</li>
+<li>实际上莫队是一种近似暴力的方法，时间复杂度比暴力客观得多，但是很不巧这道题的数据很强莫队卡不过去只有80分…</li>
+<li>贴出莫队代码氧气优化80分</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// luogu-judger-enable-o2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> re register int</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rep(i,a,b) for(re i=(a);i&lt;=(b);++(i))</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N=<span class="number">500010</span>;</span><br><span class="line"><span class="keyword">int</span> n,m,le=<span class="number">1</span>,ri=<span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> a[N],clo[<span class="number">2</span>*N],sum=<span class="number">1</span>,size,ans[N],belong[N];</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">que</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> l,r,id;</span><br><span class="line">    <span class="keyword">inline</span> <span class="keyword">bool</span> <span class="keyword">operator</span> &lt;(<span class="keyword">const</span> que &amp;rhy) <span class="keyword">const</span>&#123;<span class="keyword">return</span> belong[l]==belong[rhy.l]?r&lt;rhy.r:belong[l]&lt;belong[rhy.l];&#125;</span><br><span class="line">&#125;q[N];</span><br><span class="line">	</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">move</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> opt)</span></span>&#123;</span><br><span class="line">    clo[a[x]]+=opt;</span><br><span class="line">    <span class="keyword">if</span>(clo[a[x]]==<span class="number">0</span>&amp;&amp;opt==<span class="number">-1</span>) sum--;</span><br><span class="line">    <span class="keyword">if</span>(clo[a[x]]==<span class="number">1</span>&amp;&amp;opt==<span class="number">1</span>) sum++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);size=<span class="built_in">sqrt</span>(n);</span><br><span class="line">    rep(i,<span class="number">1</span>,n) <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;a[i]);rep(i,<span class="number">1</span>,n) belong[i]=(i<span class="number">-1</span>)/size+<span class="number">1</span>;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;m);</span><br><span class="line">    rep(i,<span class="number">1</span>,m)<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;q[i].l,&amp;q[i].r),q[i].id=i;</span><br><span class="line">    sort(q+<span class="number">1</span>,q+<span class="number">1</span>+m);clo[a[<span class="number">1</span>]]++;</span><br><span class="line">    rep(i,<span class="number">1</span>,m)&#123;</span><br><span class="line">        <span class="keyword">while</span>(le&lt;q[i].l)&#123;move(le,<span class="number">-1</span>);le++;&#125;</span><br><span class="line">        <span class="keyword">while</span>(le&gt;q[i].l)&#123;le--;move(le,<span class="number">1</span>);&#125;</span><br><span class="line">        <span class="keyword">while</span>(ri&gt;q[i].r)&#123;move(ri,<span class="number">-1</span>);ri--;&#125;</span><br><span class="line">        <span class="keyword">while</span>(ri&lt;q[i].r)&#123;ri++;move(ri,<span class="number">1</span>);&#125;</span><br><span class="line">        ans[q[i].id]=sum;</span><br><span class="line">    &#125;</span><br><span class="line">    rep(i,<span class="number">1</span>,m) <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,ans[i]);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>-不熟悉Makedown的我觉得这样应该勉强能看排版丑勿介</p>
+<hr>
+<h4 id="正解树状数组-100分"><a href="#正解树状数组-100分" class="headerlink" title="正解树状数组 100分"></a>正解树状数组 100分</h4><ul>
+<li>我觉得其实很容易就会想到用树状数组或者线段树，但是我好像并不会维护所以才去打的莫队…莫队加了优化也是可以过的可是我不会（逃</li>
+<li>如果知道怎么去维护树状数组其实题目就已经完成了（废话）</li>
+<li>我们来看一组数列 1 3 4 2 1 ，我们可以发现，对于询问区间 r = 5 的所有询问中（ l &lt;= r ), 因为这个数列的第五个为 1 ，而第一个也是 1 ，所以对于 r = 5 而言，第一个数是没有多大意义的…</li>
+<li>我觉得很好理解…所以我们可以对所有询问离线，再对 r 进行排序，用树状数组维护 （好像也不需要维护），只需要对于每次询问求前缀和即可</li>
+<li>单点增加与查找的函数都是模板没有什么变化，我们只需要想到如何用树状数组表示出前 i 个贝壳颜色的种类</li>
+<li>我们用 last 数组表示出该颜色在此之前第一次出现的位置， vis 数组用于表示 i 颜色是否出现过</li>
+<li>很容易得出 query（r)-query(l-1)即为答案但是如何不出错呢，我们要这样动态更新呢</li>
+<li>只要在左端点之前出现过，就加上，想通这一点，只需要最基础的树状数组就行了</li>
+<li>洛谷吸氧 424 ms AC100分</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// luogu-judger-enable-o2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> re register int</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rep(i,a,b) for(re i=(a);i&lt;=(b);++(i))</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N=<span class="number">1000010</span>;</span><br><span class="line"><span class="keyword">int</span> n,m;</span><br><span class="line"><span class="keyword">int</span> v[N],tree[N],ans[N],vis[N],last[N];</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">question</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> l,r,id;</span><br><span class="line">    <span class="keyword">inline</span> <span class="keyword">bool</span> <span class="keyword">operator</span> &lt; (<span class="keyword">const</span> question &amp;rhy)<span class="keyword">const</span> &#123;<span class="keyword">return</span> r!=rhy.r?r&lt;rhy.r:l&lt;rhy.l;&#125;</span><br><span class="line">&#125;q[<span class="number">500010</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">lowbit</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;<span class="keyword">return</span> x&amp;-x;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> k)</span></span>&#123;<span class="keyword">while</span>(x&lt;=n) tree[x]+=k,x+=lowbit(x);&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">query</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;<span class="keyword">int</span> ans=<span class="number">0</span>;<span class="keyword">while</span>(x&gt;<span class="number">0</span>)&#123;ans+=tree[x];x-=lowbit(x);&#125;<span class="keyword">return</span> ans;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">    rep(i,<span class="number">1</span>,n) <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;v[i]);<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;m);</span><br><span class="line">    rep(i,<span class="number">1</span>,m) &#123;<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;q[i].l,&amp;q[i].r);q[i].id=i;&#125;</span><br><span class="line">    sort(q+<span class="number">1</span>,q+<span class="number">1</span>+m);</span><br><span class="line">    <span class="keyword">int</span> now=<span class="number">0</span>;</span><br><span class="line">    rep(i,<span class="number">1</span>,m)&#123;</span><br><span class="line">        <span class="keyword">while</span>(now&lt;q[i].r) &#123;</span><br><span class="line">            now++;</span><br><span class="line">            <span class="keyword">if</span>(!vis[v[now]]) vis[v[now]]=<span class="number">1</span>,last[v[now]]=now,add(now,<span class="number">1</span>);</span><br><span class="line">            <span class="keyword">else</span> add(last[v[now]],<span class="number">-1</span>),add(now,<span class="number">1</span>),last[v[now]]=now;</span><br><span class="line">        &#125;</span><br><span class="line">        ans[q[i].id]=query(q[i].r)-query(q[i].l<span class="number">-1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    rep(i,<span class="number">1</span>,m) <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,ans[i]);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>感谢资瓷欢迎围观指正</li>
+</ul>
+<p>联系qq： 953559040</p>
+<p>微博： IncinblePan</p>
+<p>洛谷： SherlockPan</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2018/05/10/hello-world/" rel="next" title="前言">
+                <i class="fa fa-chevron-left"></i> 前言
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2018/05/14/左偏树/" rel="prev" title="左偏树">
+                左偏树 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/blog/images/avatar.jpg"
+                alt="Sherlock Pan" />
+            
+              <p class="site-author-name" itemprop="name">Sherlock Pan</p>
+              <p class="site-description motion-element" itemprop="description">每个人为不同的理由戴着面具说谎，动机也只有一个名字那叫做欲望</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/6002851702/profile?topnav=1&wvr=6" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-globe"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/sherlock-76-85/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#暴力-莫队-树状数组"><span class="nav-number">1.</span> <span class="nav-text">暴力   莫队  树状数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题目描述"><span class="nav-number">2.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输入输出格式"><span class="nav-number">3.</span> <span class="nav-text">输入输出格式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#输入格式："><span class="nav-number">3.0.1.</span> <span class="nav-text">输入格式：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#输出格式："><span class="nav-number">3.0.2.</span> <span class="nav-text">输出格式：</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解题分析"><span class="nav-number"></span> <span class="nav-text">解题分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#暴力"><span class="nav-number">0.1.</span> <span class="nav-text">暴力</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#莫队-80分"><span class="nav-number">0.2.</span> <span class="nav-text">莫队  80分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#正解树状数组-100分"><span class="nav-number">0.3.</span> <span class="nav-text">正解树状数组 100分</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sherlock Pan</span>
+
+  
+</div>
+
+
+
+  <div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共8.8k字</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

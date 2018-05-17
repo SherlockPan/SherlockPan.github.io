@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB;
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB;
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB; 
+        border-left-color: #1E92FB; 
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/blog/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/blog/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言：前几天学习高级数据结构，现在准备复习…">
+<meta property="og:type" content="article">
+<meta property="og:title" content="左偏树">
+<meta property="og:url" content="http://yoursite.com/2018/05/14/左偏树/index.html">
+<meta property="og:site_name" content="Sherlock小蒟蒻">
+<meta property="og:description" content="前言：前几天学习高级数据结构，现在准备复习…">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-17T08:18:48.435Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="左偏树">
+<meta name="twitter:description" content="前言：前几天学习高级数据结构，现在准备复习…">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/14/左偏树/"/>
+
+
+
+
+
+  <title>左偏树 | Sherlock小蒟蒻</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sherlock小蒟蒻</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/blog/2018/05/14/左偏树/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sherlock Pan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sherlock小蒟蒻">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">左偏树</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-14T18:31:08+08:00">
+                2018-05-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,739
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  12
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h4><p>前几天学习高级数据结构，现在准备复习…</p>
+<hr>
+<a id="more"></a>
+<h4 id="左偏树杂谈："><a href="#左偏树杂谈：" class="headerlink" title="左偏树杂谈："></a>左偏树杂谈：</h4><ul>
+<li>左偏树是一种可并堆。</li>
+<li>对于一般的而言，我们可以很容易地想到一种时间复杂度为 O（n ) 的<br>算法合并两个堆。看样子可以接受，但是如果要合并一万次，十万次的话，总的时间复杂度却很难让人接受，因此左偏树应运而生。</li>
+<li>优先队列也能算是可并堆，在优先队列中插入一个数，时间复杂度应该是 O（log2n) （百度上说的本人没有证明） ，但是优先队列不支持合并。</li>
+<li>而左偏树，是一种可并堆的实现，能够在时间复杂度为 O（loga + logb) 的情况下合并两个堆。</li>
+<li>现在我们着重讲讲左偏树的性质与合并时的算法</li>
+</ul>
+<hr>
+<h4 id="左偏树性质："><a href="#左偏树性质：" class="headerlink" title="左偏树性质："></a>左偏树性质：</h4><ul>
+<li>左偏树是一棵二叉树，它具有二叉树的性质</li>
+<li>比如说一个节点的键值小于等于它两个儿子的键值，因而这棵树的根一定是整个堆中最小的数，我们可以在 O（1）的时间复杂度下取出最小值</li>
+<li>它的节点有一个左指针和一个右指针，还有这个节点的键值，还有距离。键值很好理解，而左偏树的重点是它的距离，合并删除的实现也和距离分不开，也因距离而得名为左偏树（口糊）<h5 id="我们这样定义距离：（划重点！！！"><a href="#我们这样定义距离：（划重点！！！" class="headerlink" title="我们这样定义距离：（划重点！！！"></a>我们这样定义距离：（划重点！！！</h5></li>
+<li>如果一个节点，它的左儿子或者右儿子为空，那么我们称这个节点为外节点，换句话说，称为外节点的点的儿子只有一个或者没有（真可伶</li>
+<li>而左偏树的精髓–距离，指的是该节点 i 到它最近的外节点所经过的边数。如果这个点为外界点，那么这个点的距离为 0，如果这个点为空，那么这个点的距离为 -1 。</li>
+<li>我们称一棵左偏树的距离为这棵树根节点的距离。</li>
+</ul>
+<h5 id="左偏性质："><a href="#左偏性质：" class="headerlink" title="左偏性质："></a>左偏性质：</h5><ul>
+<li>左偏性质导致该数据类型叫做左偏树。</li>
+<li>即该节点左孩子的距离要不小于右孩子的距离</li>
+<li>我们可以得到，节点 i 的距离等于它右儿子的距离加 1 ，所以我们规定外节点的距离为0空节点距离为 -1</li>
+<li>而在进行合并和删除可并堆的时候，我们一定要注意维护左偏性质</li>
+</ul>
+<h5 id="距离与节点的关系"><a href="#距离与节点的关系" class="headerlink" title="距离与节点的关系"></a>距离与节点的关系</h5><ul>
+<li>一棵左偏树的距离为 k ，那么这棵左偏树的节点数最少有 2<sup>k+1</sup>-1（我觉得用极端法就可以证明</li>
+<li>还有一点我不会证明的（我也没去证明…）若左偏树的距离为一定值，则节点数最少的左偏树是完全二叉树。</li>
+<li>一棵 N 个节点左偏树距离最多为 log（N+1）-1.</li>
+</ul>
+<p>我也想要插入图片！！！</p>
+<hr>
+<h4 id="左偏树模板"><a href="#左偏树模板" class="headerlink" title="左偏树模板:"></a>左偏树模板:</h4><h5 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h5><p>如题，一开始有N个小根堆，每个堆包含且仅包含一个数。接下来需要支持两种操作：</p>
+<p>操作1： 1 x y 将第x个数和第y个数所在的小根堆合并（若第x或第y个数已经被删除或第x和第y个数在用一个堆内，则无视此操作）</p>
+<p>操作2： 2 x 输出第x个数所在的堆最小数，并将其删除（若第x个数已经被删除，则输出-1并无视删除操作）</p>
+<h5 id="输入输出格式"><a href="#输入输出格式" class="headerlink" title="输入输出格式"></a>输入输出格式</h5><h5 id="输入格式："><a href="#输入格式：" class="headerlink" title="输入格式："></a>输入格式：</h5><p>第一行包含两个正整数N、M，分别表示一开始小根堆的个数和接下来操作的个数。</p>
+<p>第二行包含N个正整数，其中第i个正整数表示第i个小根堆初始时包含且仅包含的数。</p>
+<p>接下来M行每行2个或3个正整数，表示一条操作，格式如下：</p>
+<p>操作1 ： 1 x y</p>
+<p>操作2 ： 2 x</p>
+<h5 id="输出格式："><a href="#输出格式：" class="headerlink" title="输出格式："></a>输出格式：</h5><p>输出包含若干行整数，分别依次对应每一个操作2所得的结果。</p>
+<h5 id="输入输出样例"><a href="#输入输出样例" class="headerlink" title="输入输出样例:"></a>输入输出样例:</h5><pre><code>输入样例#1： 
+
+5 5
+1 5 4 2 3
+1 1 5
+1 2 5
+2 2
+1 4 2
+2 2
+
+输出样例#1： 
+1
+2
+</code></pre><p>我觉得我们对左偏树一些基本性质的讲解已经很清楚了，我们现在来看一下怎么实现代码…</p>
+<ul>
+<li>初始化节点每个节点有四个元素：左儿子右儿子键值距离</li>
+<li>我们用并查集来找这一个堆的祖宗…注意**不</li>
+<li>能路径压缩**因为如果这个堆的祖先被删去了，对于这个堆你就找不到祖先了（大哭</li>
+<li>现在讲讲<strong>合并操作</strong>（我觉得我应该找个图来的</li>
+<li>如果一棵树为空，那么我们只需要返回另一棵树，像这样</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!x||!y) <span class="keyword">return</span> x+y;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果两棵树为非空，我们假设 A 的根节点小于等于 B 的根节点（否则交换 A ， B </li>
+<li>把 A 的根节点作为新树 C 的根节点，再合并 A 的右子树和 B </li>
+<li>合并 A 的右子树和 B 后，A 的右子树的距离可能会变大，当合并后 A 的右儿子距离大于左儿子距离时，我们只需要交换左儿子和右儿子即满足了左偏树的性质</li>
+<li>最后，我们更新 A 的距离，即 dis( A )=dis( right(A) )+1;</li>
+<li>不难发现，合并后新的树也满足左偏性质</li>
+<li>我们贴一下代码</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">  	<span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line"> 			<span class="keyword">if</span>(!x||!y) <span class="keyword">return</span> x+y;</span><br><span class="line">  		<span class="keyword">if</span>(a[x].value&gt;a[y].value||(a[x].value==a[y].value&amp;&amp;x&gt;y)) swap(x,y);</span><br><span class="line">  		<span class="keyword">int</span> &amp;ls=a[x].l,&amp;rs=a[x].r;</span><br><span class="line">  		rs=merge(rs,y);</span><br><span class="line">  		a[rs].fa=x;</span><br><span class="line">   	<span class="keyword">if</span>(a[rs].dis&gt;a[ls].dis) swap(ls,rs);</span><br><span class="line">   	a[x].dis=a[rs].dis+<span class="number">1</span>;</span><br><span class="line">   	<span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>合并操作之后我们再讲讲<strong>删除节点</strong></li>
+<li>其实删除操作很简单，如果我们要删除节点为 X ，只需要把 X 节点的信息清空，再把 X 的左儿子和右儿子进行合并即可。</li>
+<li><p>我们贴一下代码</p>
+<pre><code>inline void del(int x){
+    int ls=a[x].l,rs=a[x].r;
+    a[x].value=-1;
+       a[ls].fa=a[rs].fa=0;
+       merge(ls,rs);
+}
+</code></pre></li>
+<li><p>这样我们讲完了左偏树的基本操作，现在贴出这道模板题的AC代码</p>
+</li>
+</ul>
+<h5 id="AC代码氧气优化152ms"><a href="#AC代码氧气优化152ms" class="headerlink" title="AC代码氧气优化152ms"></a>AC代码氧气优化152ms</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// luogu-judger-enable-o2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> re register int</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rep(i,a,b) for(re i=(a);i&lt;=(b);++(i))</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N=<span class="number">100010</span>;</span><br><span class="line"><span class="keyword">int</span> n,m;</span><br><span class="line"><span class="keyword">int</span> x,y;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> l,r,value,fa,dis;</span><br><span class="line">&#125;a[N];</span><br><span class="line"></span><br><span class="line"><span class="comment">//inline void swap(int &amp;a,int &amp;b) &#123;a^=b^=a^=b;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;<span class="keyword">return</span> a[x].fa?find(a[x].fa):x;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!x||!y) <span class="keyword">return</span> x+y;</span><br><span class="line">    <span class="keyword">if</span>(a[x].value&gt;a[y].value||(a[x].value==a[y].value&amp;&amp;x&gt;y)) swap(x,y);</span><br><span class="line">    <span class="keyword">int</span> &amp;ls=a[x].l,&amp;rs=a[x].r;</span><br><span class="line">    rs=merge(rs,y);</span><br><span class="line">    a[rs].fa=x;</span><br><span class="line">    <span class="keyword">if</span>(a[rs].dis&gt;a[ls].dis) swap(ls,rs);</span><br><span class="line">    a[x].dis=a[rs].dis+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">del</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ls=a[x].l,rs=a[x].r;</span><br><span class="line">    a[x].value=<span class="number">-1</span>;</span><br><span class="line">    a[ls].fa=a[rs].fa=<span class="number">0</span>;</span><br><span class="line">    merge(ls,rs);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;n,&amp;m);</span><br><span class="line">    a[<span class="number">0</span>].dis=<span class="number">-1</span>;</span><br><span class="line">    rep(i,<span class="number">1</span>,n) <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;a[i].value);</span><br><span class="line">    <span class="keyword">while</span>(m--)&#123;</span><br><span class="line">        <span class="keyword">int</span> type;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;type);</span><br><span class="line">        <span class="keyword">switch</span>(type)&#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">1</span>:&#123;</span><br><span class="line">                <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;x,&amp;y);</span><br><span class="line">                <span class="keyword">if</span>(a[x].value!=<span class="number">-1</span>&amp;&amp;a[y].value!=<span class="number">-1</span>)&#123;</span><br><span class="line">                    <span class="keyword">int</span> p=find(x),q=find(y);</span><br><span class="line">                    <span class="keyword">if</span>(p!=q) merge(p,q);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">2</span>:&#123;</span><br><span class="line">                <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;x);</span><br><span class="line">                <span class="keyword">if</span>(a[x].value==<span class="number">-1</span>) <span class="built_in">printf</span>(<span class="string">"-1\n"</span>);</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">int</span> p=find(x);</span><br><span class="line">                    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,a[p].value);</span><br><span class="line">                    del(p); </span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>我觉得我讲的已经很详细了，现在我们来进行实战</li>
+</ul>
+<hr>
+<h4 id="Monkey-King："><a href="#Monkey-King：" class="headerlink" title="Monkey King："></a>Monkey King：</h4><h5 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h5><p>一开始有n只孤独的猴子，然后他们要打m次架，每次打架呢，都会拉出自己朋友最牛叉的出来跟别人打，打完之后他的朋友的战斗力就会减半，每次打完架双方所有人就会成为朋友（正所谓不打不相识o(∩_∩)o ）。问每次打完架之后那俩猴子最牛叉的朋友战斗力还有多少，若朋友打架就输出-1.</p>
+<h5 id="输入输出格式："><a href="#输入输出格式：" class="headerlink" title="输入输出格式："></a>输入输出格式：</h5><p>暂不支持英文翻译….</p>
+<h5 id="解题分析："><a href="#解题分析：" class="headerlink" title="解题分析："></a>解题分析：</h5><ul>
+<li>很容易发现这道题需要我们合并两个堆…</li>
+<li>但是每个堆合并之后的根的键值会变化…</li>
+<li>我们使用大根堆，以便找到堆中最大的数来打架…然后考虑左偏树…</li>
+<li>合并的操作上面的模板题我们已经探讨过了，但是每个合并之前的左偏树的根该如何维护其性质呢</li>
+<li>合并之后的两个堆的根不一定是原先两个堆的根中的一个（因为战斗力会下降…</li>
+<li>所以我们应该把要合并的两堆的根先删去，键值除以二，得到合并后的键值，再插入(即合并只有一个数的堆和删去根后的堆），再合并两个经过操作的堆，这时候的根节点即两堆猴子打完架后战斗力最强的猴子…</li>
+<li>这样我们只需要合并操作与删除操作，再注意一些细节，就容易就过了…</li>
+<li>目前也只找到一道用左偏树写的题…</li>
+<li>贴出代码…</li>
+</ul>
+<h5 id="AC代码氧气优化176ms"><a href="#AC代码氧气优化176ms" class="headerlink" title="AC代码氧气优化176ms"></a>AC代码氧气优化176ms</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// luogu-judger-enable-o2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> re register int</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rep(i,a,b) for(re i=(a);i&lt;=(b);++(i))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> max(a,b) (a&gt;b?a:b)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n,m,x,y;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> l,r,dis,value,fa;</span><br><span class="line">&#125;a[<span class="number">100010</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;<span class="keyword">return</span> a[x].fa!=x?find(a[x].fa):x;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!x||!y) <span class="keyword">return</span> x+y;</span><br><span class="line">    <span class="keyword">if</span>(a[x].value&lt;a[y].value) swap(x,y);</span><br><span class="line">    a[x].r=merge(a[x].r,y);</span><br><span class="line">    a[a[x].r].fa=x;</span><br><span class="line">    <span class="keyword">if</span>(a[a[x].l].dis&lt;a[a[x].r].dis) swap(a[x].r,a[x].l);</span><br><span class="line">    <span class="keyword">if</span>(!a[x].r)a[x].dis=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> a[x].dis=a[a[x].r].dis+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">del</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ls=a[x].l,rs=a[x].r;</span><br><span class="line">    a[x].l=a[x].r=a[x].dis=<span class="number">0</span>;a[ls].fa=ls;a[rs].fa=rs;</span><br><span class="line">    <span class="keyword">return</span> merge(ls,rs);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n)!=EOF)&#123;</span><br><span class="line">        a[<span class="number">0</span>].dis=<span class="number">-1</span>;</span><br><span class="line">        rep(i,<span class="number">1</span>,n) &#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;a[i].value);</span><br><span class="line">            a[i].fa=i;</span><br><span class="line">            a[i].dis=a[i].r=a[i].l=<span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;m);</span><br><span class="line">        rep(i,<span class="number">1</span>,m)&#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;x,&amp;y);</span><br><span class="line">            <span class="keyword">int</span> p=find(x),q=find(y);</span><br><span class="line">            <span class="keyword">if</span>(p==q) &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"-1\n"</span>);<span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            a[p].value/=<span class="number">2</span>;a[q].value/=<span class="number">2</span>;</span><br><span class="line">            <span class="keyword">int</span> lr=del(p),rr=del(q);</span><br><span class="line">            lr=merge(lr,p);rr=merge(rr,q);</span><br><span class="line">            lr=merge(lr,rr);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,a[lr].value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>本文完，欢迎指正…（我太弱了…</p>
+<p>联系qq： 953559040</p>
+<p>微博： IncinblePan</p>
+<p>洛谷： SherlockPan</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2018/05/13/SDoi2009/" rel="next" title="SDOI2009  HH的项链">
+                <i class="fa fa-chevron-left"></i> SDOI2009  HH的项链
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2018/05/15/splay/" rel="prev" title="Splay 文艺平衡树">
+                Splay 文艺平衡树 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/blog/images/avatar.jpg"
+                alt="Sherlock Pan" />
+            
+              <p class="site-author-name" itemprop="name">Sherlock Pan</p>
+              <p class="site-description motion-element" itemprop="description">每个人为不同的理由戴着面具说谎，动机也只有一个名字那叫做欲望</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/6002851702/profile?topnav=1&wvr=6" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-globe"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/sherlock-76-85/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言："><span class="nav-number">1.</span> <span class="nav-text">前言：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#左偏树杂谈："><span class="nav-number">2.</span> <span class="nav-text">左偏树杂谈：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#左偏树性质："><span class="nav-number">3.</span> <span class="nav-text">左偏树性质：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#我们这样定义距离：（划重点！！！"><span class="nav-number">3.1.</span> <span class="nav-text">我们这样定义距离：（划重点！！！</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#左偏性质："><span class="nav-number">3.2.</span> <span class="nav-text">左偏性质：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#距离与节点的关系"><span class="nav-number">3.3.</span> <span class="nav-text">距离与节点的关系</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#左偏树模板"><span class="nav-number">4.</span> <span class="nav-text">左偏树模板:</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#题目描述"><span class="nav-number">4.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#输入输出格式"><span class="nav-number">4.2.</span> <span class="nav-text">输入输出格式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#输入格式："><span class="nav-number">4.3.</span> <span class="nav-text">输入格式：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#输出格式："><span class="nav-number">4.4.</span> <span class="nav-text">输出格式：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#输入输出样例"><span class="nav-number">4.5.</span> <span class="nav-text">输入输出样例:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#AC代码氧气优化152ms"><span class="nav-number">4.6.</span> <span class="nav-text">AC代码氧气优化152ms</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Monkey-King："><span class="nav-number">5.</span> <span class="nav-text">Monkey King：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#题目描述："><span class="nav-number">5.1.</span> <span class="nav-text">题目描述：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#输入输出格式："><span class="nav-number">5.2.</span> <span class="nav-text">输入输出格式：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解题分析："><span class="nav-number">5.3.</span> <span class="nav-text">解题分析：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#AC代码氧气优化176ms"><span class="nav-number">5.4.</span> <span class="nav-text">AC代码氧气优化176ms</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sherlock Pan</span>
+
+  
+</div>
+
+
+
+  <div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共8.8k字</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
