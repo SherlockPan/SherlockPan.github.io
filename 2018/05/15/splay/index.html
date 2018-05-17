@@ -112,7 +112,7 @@
 <meta property="og:image" content="https://i.imgur.com/Euc5H85.png">
 <meta property="og:image" content="https://i.imgur.com/W31Iypy.png">
 <meta property="og:image" content="https://i.imgur.com/voDuGtv.jpg">
-<meta property="og:updated_time" content="2018-05-15T12:53:49.125Z">
+<meta property="og:updated_time" content="2018-05-17T12:56:46.793Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Splay 文艺平衡树">
 <meta name="twitter:description" content="前言：平衡树是一种很有用的数据结构，在很多高级数据结构中都有很多用处。">
@@ -320,7 +320,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,491
+                  2,981
                 </span>
               
 
@@ -336,7 +336,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5
+                  12
                 </span>
               
             </div>
@@ -387,32 +387,32 @@
 <li>还有一件很重要的事  （我终于会挂图片了Makedown真坑…）</li>
 </ul>
 <hr>
-<h3 id="Splay-Tree-的具体操作："><a href="#Splay-Tree-的具体操作：" class="headerlink" title="Splay-Tree 的具体操作："></a>Splay-Tree 的具体操作：</h3><h5 id="access："><a href="#access：" class="headerlink" title="access："></a>access：</h5><ul>
+<h3 id="Splay-Tree-的具体操作："><a href="#Splay-Tree-的具体操作：" class="headerlink" title="Splay-Tree 的具体操作："></a>Splay-Tree 的具体操作：</h3><h4 id="access："><a href="#access：" class="headerlink" title="access："></a>access：</h4><ul>
 <li>access（i）表示我们返回 i 的指针，如果点 i 出现在 Splay-Tree 中，否则我们返回空指针</li>
 <li>我们设树根为 root ，从树根向下寻找 若找到含有 i 的节点 x ，就Splaying x ,返回 x 的指针，结束访问操作</li>
 <li>如果我们遇到了空指针，代表我们要访问的 i 不在 Splay-Tree 中，我们就只能在树的最后一个非空节点进行一次 Splaying 操作，然后返回空指针</li>
 <li>另外，如果这一棵树是空的，我们忽略 Splaying 的操作…</li>
 </ul>
-<h5 id="join："><a href="#join：" class="headerlink" title="join："></a>join：</h5><ul>
+<h4 id="join："><a href="#join：" class="headerlink" title="join："></a>join：</h4><ul>
 <li>我把树的插入和删除操作放在了后面，我们先来看一下合并 join 操作和分裂 split 操作</li>
 <li>join 是将树 T1，与 T2 合并，包含两棵树的所有节点，并返回合并后的树</li>
 <li>操作先假设 T1 的所有节点都小于 T2，操作结束之后会销毁 T1,T2</li>
 <li>我们先访问 T1 中的最大节点 i ，访问结束后，i 就变成了 T1 的根节点，它的右孩子为空。然后我们将 T2 作为 i 的右子树（这时 i 已经成为 T1 的根节点） 并返回完成后的新树，完成操作</li>
 </ul>
-<h5 id="split："><a href="#split：" class="headerlink" title="split："></a>split：</h5><ul>
+<h4 id="split："><a href="#split：" class="headerlink" title="split："></a>split：</h4><ul>
 <li>我们分裂一棵树并且返回两棵树 T1 和 T2 ，T1 包括所有小于等于 i    的节点，T2 包含所有大于 i 的节点，操作完成后销毁原树</li>
 <li>我们先访问（access）i ，然后再根据新节点的左儿子和右儿子的值来进行切断操作，并返回形成的两棵树…</li>
 </ul>
-<h5 id="insert："><a href="#insert：" class="headerlink" title="insert："></a>insert：</h5><ul>
+<h4 id="insert："><a href="#insert：" class="headerlink" title="insert："></a>insert：</h4><ul>
 <li>现在我们看看插入和删除的操作</li>
 <li>insert（i，T）表示我们将点 i 插入到树 T 中，我们首先执行 split 操作，然后将 T 换成一个包含 i 的根节点的新树，这个根节点的左右两棵子树就是 split 返回的 T1 和 T2</li>
 </ul>
-<h5 id="delete："><a href="#delete：" class="headerlink" title="delete："></a>delete：</h5><ul>
+<h4 id="delete："><a href="#delete：" class="headerlink" title="delete："></a>delete：</h4><ul>
 <li>从树中删除节点 i ，我们首先执行访问（access） i ，然后将 T 变成 i 的左子树和右子树合并 （join） 之后的新树</li>
 <li>我觉得在理解合并（join)和分裂（split）操作之后是很容易理解插入（insert）和删除（delete）操作的</li>
 <li>另外，在基础操作理解之后，我们来看看更优的插入和删除操作</li>
 </ul>
-<h5 id="更优的插入（insert）和删除（delete）："><a href="#更优的插入（insert）和删除（delete）：" class="headerlink" title="更优的插入（insert）和删除（delete）："></a>更优的插入（insert）和删除（delete）：</h5><ul>
+<h4 id="更优的插入（insert）和删除（delete）："><a href="#更优的插入（insert）和删除（delete）：" class="headerlink" title="更优的插入（insert）和删除（delete）："></a>更优的插入（insert）和删除（delete）：</h4><ul>
 <li>insert：我们先查找 i ，把遇到的空指针替换成一个含有 i 的新节点，再 Splaying 这个由空节点替换后的节点</li>
 <li>delete：我们查找含有 i 的节点，设这个节点为 x ，它的父亲节点为 y ,把 x 的左右子树合并之后，再把 y 进行 Splaying 操作</li>
 </ul>
@@ -423,15 +423,61 @@
 <h3 id="Splay-Tree的区间操作："><a href="#Splay-Tree的区间操作：" class="headerlink" title="Splay-Tree的区间操作："></a>Splay-Tree的区间操作：</h3><ul>
 <li>有了以上那么多的操作方法，相信对 Splay-Tree 的理解已经很深了，我们现在只需要学习对 Splay-Tree 的查询操作，就可以运用 Splay-Tree 解题了</li>
 </ul>
-<h5 id="无用的小标题…"><a href="#无用的小标题…" class="headerlink" title="无用的小标题…"></a>无用的小标题…</h5><ul>
+<h4 id="区间查询与修改"><a href="#区间查询与修改" class="headerlink" title="区间查询与修改"></a>区间查询与修改</h4><ul>
 <li>实际上，Splay-Tree 的中序遍历，即为我们要维护的数列，我们要如何在 Splay-Tree 中表示出某个区间呢</li>
 <li>假设我们现在要提取区间 [a,b]，我们先将 a 前面一个数对应的节点旋转到根，将 b 的后面一个数对应的节点转到根的右边，可以发现，这时候根右边的左子树就对应了区间 [a,b]，我们来看一张图…</li>
 </ul>
 <p><img src="https://i.imgur.com/voDuGtv.jpg" alt=""></p>
 <ul>
 <li>是不是很好理解？然后我们利用以上的区间操作就可以实现线段树的功能，在这里我们不做多解释，就讲一下<strong>区间修改</strong></li>
-<li>我们需要用到类似于线段树的延迟标记，</li>
+<li>我们需要用到类似于线段树的延迟标记。对于每一个节点，我们额外记录一个或几个标记，表示以这个节点为根的子树是否进行了某种操作，而且这种操作会影响这个节点的子节点</li>
+<li>当我们进行旋转或者别的操作时，我们就下放这些操作，维护该节点的子节点信息，若我们不设置这些延迟标记的话，在进行这些操作的时候就更改子节点的信息，如果这些节点在之后的操作并没有被询问到，那么这次修改的就没有意义了…这也是为什么我们需要延迟标记…</li>
 </ul>
+<h4 id="Splay-Tree-优于线段树的功能"><a href="#Splay-Tree-优于线段树的功能" class="headerlink" title="Splay-Tree 优于线段树的功能"></a>Splay-Tree 优于线段树的功能</h4><ul>
+<li>我们讲两种操作</li>
+<li>如果我们要在 a 后面插入一些数，只需要将要插入的树构造成一棵 Splay-Tree ，然后将 a 转到根，并将 a 后面一个数对应的节点转到 a 的右边，最后把新构造的 Splay-Tree 挂到 a 的右节点的左儿子就行了</li>
+<li>如果我们要删除区间 [ a , b ] 内的数，只需要提取区间 [ a , b ] ，直接删除即可</li>
+<li>讲完了 Splay-Tree 的操作，我们来看一下模板题…</li>
+</ul>
+<hr>
+<h3 id="Splay-Tree的模板题"><a href="#Splay-Tree的模板题" class="headerlink" title="Splay-Tree的模板题"></a>Splay-Tree的模板题</h3><h4 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a>题目背景</h4><p>这是一道经典的Splay模板题——文艺平衡树。</p>
+<h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>您需要写一种数据结构（可参考题目标题），来维护一个有序数列，其中需要提供以下操作：翻转一个区间，例如原有序序列是5 4 3 2 1，翻转区间是[2,4]的话，结果是5 2 3 4 1</p>
+<h4 id="输入输出格式"><a href="#输入输出格式" class="headerlink" title="输入输出格式"></a>输入输出格式</h4><h5 id="输入格式："><a href="#输入格式：" class="headerlink" title="输入格式："></a>输入格式：</h5><p>第一行为n,m n表示初始序列有n个数，这个序列依次是 ( 1 , 2 , ⋯ n−1 , n )  m 表示翻转操作次数</p>
+<p>接下来m行每行两个数 [ l , r ][ l , r ] 数据保证  1 ≤ l ≤ r ≤ n </p>
+<h5 id="输出格式："><a href="#输出格式：" class="headerlink" title="输出格式："></a>输出格式：</h5><p>输出一行n个数字，表示原始序列经过m次变换后的结果</p>
+<h4 id="输入输出样例"><a href="#输入输出样例" class="headerlink" title="输入输出样例"></a>输入输出样例</h4><h5 id="输入样例-1："><a href="#输入样例-1：" class="headerlink" title="输入样例#1："></a>输入样例#1：</h5><pre><code>5 3
+1 3
+1 3
+1 4
+</code></pre><h5 id="输出样例-1："><a href="#输出样例-1：" class="headerlink" title="输出样例#1："></a>输出样例#1：</h5><pre><code>4 3 2 1 5
+</code></pre><h4 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h4><pre><code>n,m ≤ 100000
+</code></pre><h4 id="解题分析"><a href="#解题分析" class="headerlink" title="解题分析"></a>解题分析</h4><ul>
+<li>说实在话 Splay-Tree上面讲的很多了…</li>
+<li>还有我觉得洛谷上 Treap 的模板要比这道题好…几乎纯 Splay-Tree</li>
+<li>这道题我们需要对 Splay-Tree 进行区间翻转…</li>
+<li>上面好像并没有讲怎么进行区间翻转…没关系自己动手丰衣足食</li>
+<li>这里平衡树（老是打Splay-Tree太麻烦了…)维护的不再是权值了，题目中按照编号排序，而最后的结果实际上也是求平衡树的中序排序（性质</li>
+<li>所以维护权值肯定不对…</li>
+<li>如果我们找的点在树中是第 K 个，那么这个数就是树中的第 K 大，所以序列中的位置就变成了区间第 K 大…</li>
+<li>而翻转，其实就是把这个节点的子树左右儿子互换即可，我们只需要一直下放标记，然后把左右儿子交换…最后输出平衡树的中序遍历即可…</li>
+<li>这种方法还是比较直白的，我不是很想给出证明…洛谷上很多人也这样写…代码还是比较简单的…</li>
+</ul>
+<h4 id="AC代码吸氧444ms"><a href="#AC代码吸氧444ms" class="headerlink" title="AC代码吸氧444ms"></a>AC代码吸氧444ms</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// luogu-judger-enable-o2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> re register int</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rep(i,a,b) for(re i=(a);i&lt;=(b);++(i))</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N=<span class="number">100010</span>;</span><br><span class="line"><span class="keyword">int</span> n,m,x,y,root=<span class="number">0</span>,tot=<span class="number">0</span>,l,r;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> ch[<span class="number">2</span>],fa,val,tag,son;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> ff)</span></span>&#123;fa=ch[<span class="number">0</span>]=ch[<span class="number">1</span>]=<span class="number">0</span>;son=<span class="number">1</span>;val=x;fa=ff;&#125;</span><br><span class="line">&#125;a[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">push_up</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;a[x].son=a[a[x].ch[<span class="number">0</span>]].son+a[a[x].ch[<span class="number">1</span>]].son+<span class="number">1</span>;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">push_down</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(a[x].tag)&#123;</span><br><span class="line">        a[a[x].ch[<span class="number">0</span>]].tag^=<span class="number">1</span>;</span><br><span class="line">        a[a[x].ch[<span class="number">1</span>]].tag^=<span class="number">1</span>;</span><br><span class="line">        a[x].tag=<span class="number">0</span>;</span><br><span class="line">        swap(a[x].ch[<span class="number">0</span>],a[x].ch[<span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">    re y=a[x].fa;</span><br><span class="line">    re z=a[y].fa;</span><br><span class="line">    re k=a[y].ch[<span class="number">1</span>]==x;</span><br><span class="line">    a[z].ch[a[z].ch[<span class="number">1</span>]==y]=x;</span><br><span class="line">    a[x].fa=z;</span><br><span class="line">    a[y].ch[k]=a[x].ch[k^<span class="number">1</span>];</span><br><span class="line">    a[a[x].ch[k^<span class="number">1</span>]].fa=y;</span><br><span class="line">    a[x].ch[k^<span class="number">1</span>]=y;</span><br><span class="line">    a[y].fa=x;</span><br><span class="line">    push_up(y);push_up(x);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">splay</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> goal)</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(a[x].fa!=goal)&#123;</span><br><span class="line">        re y=a[x].fa;</span><br><span class="line">        re z=a[y].fa;</span><br><span class="line">        <span class="keyword">if</span>(z!=goal) (a[z].ch[<span class="number">1</span>]==x)^(a[y].ch[<span class="number">1</span>]==y)?rotate(x):rotate(y);</span><br><span class="line">        rotate(x);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(goal==<span class="number">0</span>) root=x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> u=root,ff=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(u)&#123;</span><br><span class="line">        ff=u;u=a[u].ch[x&gt;a[u].val];</span><br><span class="line">    &#125;</span><br><span class="line">    u=++tot;</span><br><span class="line">    <span class="keyword">if</span>(ff) a[ff].ch[x&gt;a[ff].val]=u;</span><br><span class="line">    a[u].init(x,ff);</span><br><span class="line">    splay(u,<span class="number">0</span>);</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">K_th</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> u=root;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">        push_down(u);</span><br><span class="line">        <span class="keyword">if</span>(a[a[u].ch[<span class="number">0</span>]].son&gt;=x) u=a[u].ch[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(a[a[u].ch[<span class="number">0</span>]].son==x<span class="number">-1</span>) <span class="keyword">return</span> u;</span><br><span class="line">        <span class="keyword">else</span> x-=a[a[u].ch[<span class="number">0</span>]].son+<span class="number">1</span>,u=a[u].ch[<span class="number">1</span>]; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">    push_down(x);</span><br><span class="line">    <span class="keyword">if</span>(a[x].ch[<span class="number">0</span>]) solve(a[x].ch[<span class="number">0</span>]);</span><br><span class="line">    <span class="keyword">if</span>(a[x].val&gt;<span class="number">1</span>&amp;&amp;a[x].val&lt;n+<span class="number">2</span>) <span class="built_in">printf</span>(<span class="string">"%d "</span>,a[x].val<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">if</span>(a[x].ch[<span class="number">1</span>]) solve(a[x].ch[<span class="number">1</span>]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;n,&amp;m);</span><br><span class="line">    rep(i,<span class="number">1</span>,n+<span class="number">2</span>) insert(i);</span><br><span class="line">    <span class="keyword">while</span>(m--)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;x,&amp;y);</span><br><span class="line">        l=K_th(x);r=K_th(y+<span class="number">2</span>);</span><br><span class="line">        splay(l,<span class="number">0</span>);</span><br><span class="line">        splay(r,l);</span><br><span class="line">        a[a[a[root].ch[<span class="number">1</span>]].ch[<span class="number">0</span>]].tag^=<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    solve(root);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>其实一些解释在上面已经给出了，我也不在代码里加注释了</li>
+<li>我觉得还是比较能理解的…</li>
+</ul>
+<hr>
+<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><ul>
+<li>其实我还是想加一道纯平衡树的题的（起码不用想怎么翻转…</li>
+<li>有时候练练模板还是好的但是我觉得这篇的篇幅已经很长了…</li>
+<li>那就这样吧我觉得很详细了…</li>
+<li>还有一件事我好菜啊…</li>
+<li>欢迎指正联系方式如下</li>
+</ul>
+<p>联系qq： 953559040</p>
+<p>微博： IncinblePan</p>
+<p>洛谷： SherlockPan</p>
 
       
     </div>
@@ -602,7 +648,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言："><span class="nav-number">1.</span> <span class="nav-text">前言：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简述Splay树："><span class="nav-number">2.</span> <span class="nav-text">简述Splay树：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Splaying"><span class="nav-number">3.</span> <span class="nav-text">Splaying:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Splay-Tree-的具体操作："><span class="nav-number">4.</span> <span class="nav-text">Splay-Tree 的具体操作：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#access："><span class="nav-number">4.0.1.</span> <span class="nav-text">access：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#join："><span class="nav-number">4.0.2.</span> <span class="nav-text">join：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#split："><span class="nav-number">4.0.3.</span> <span class="nav-text">split：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#insert："><span class="nav-number">4.0.4.</span> <span class="nav-text">insert：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#delete："><span class="nav-number">4.0.5.</span> <span class="nav-text">delete：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#更优的插入（insert）和删除（delete）："><span class="nav-number">4.0.6.</span> <span class="nav-text">更优的插入（insert）和删除（delete）：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Splay-Tree的区间操作："><span class="nav-number">5.</span> <span class="nav-text">Splay-Tree的区间操作：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#无用的小标题…"><span class="nav-number">5.0.1.</span> <span class="nav-text">无用的小标题…</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言："><span class="nav-number">1.</span> <span class="nav-text">前言：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简述Splay树："><span class="nav-number">2.</span> <span class="nav-text">简述Splay树：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Splaying"><span class="nav-number">3.</span> <span class="nav-text">Splaying:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Splay-Tree-的具体操作："><span class="nav-number">4.</span> <span class="nav-text">Splay-Tree 的具体操作：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#access："><span class="nav-number">4.1.</span> <span class="nav-text">access：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#join："><span class="nav-number">4.2.</span> <span class="nav-text">join：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#split："><span class="nav-number">4.3.</span> <span class="nav-text">split：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#insert："><span class="nav-number">4.4.</span> <span class="nav-text">insert：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#delete："><span class="nav-number">4.5.</span> <span class="nav-text">delete：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更优的插入（insert）和删除（delete）："><span class="nav-number">4.6.</span> <span class="nav-text">更优的插入（insert）和删除（delete）：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Splay-Tree的区间操作："><span class="nav-number">5.</span> <span class="nav-text">Splay-Tree的区间操作：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#区间查询与修改"><span class="nav-number">5.1.</span> <span class="nav-text">区间查询与修改</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Splay-Tree-优于线段树的功能"><span class="nav-number">5.2.</span> <span class="nav-text">Splay-Tree 优于线段树的功能</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Splay-Tree的模板题"><span class="nav-number">6.</span> <span class="nav-text">Splay-Tree的模板题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目背景"><span class="nav-number">6.1.</span> <span class="nav-text">题目背景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述"><span class="nav-number">6.2.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输入输出格式"><span class="nav-number">6.3.</span> <span class="nav-text">输入输出格式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#输入格式："><span class="nav-number">6.3.1.</span> <span class="nav-text">输入格式：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#输出格式："><span class="nav-number">6.3.2.</span> <span class="nav-text">输出格式：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输入输出样例"><span class="nav-number">6.4.</span> <span class="nav-text">输入输出样例</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#输入样例-1："><span class="nav-number">6.4.1.</span> <span class="nav-text">输入样例#1：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#输出样例-1："><span class="nav-number">6.4.2.</span> <span class="nav-text">输出样例#1：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#说明"><span class="nav-number">6.5.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解题分析"><span class="nav-number">6.6.</span> <span class="nav-text">解题分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AC代码吸氧444ms"><span class="nav-number">6.7.</span> <span class="nav-text">AC代码吸氧444ms</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后记"><span class="nav-number">7.</span> <span class="nav-text">后记</span></a></li></ol></div>
             
 
           </div>
@@ -644,7 +690,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共9.5k字</span>
+  <span class="post-count">博客全站共10.9k字</span>
 </div>
         
 
