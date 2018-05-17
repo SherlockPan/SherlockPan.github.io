@@ -108,7 +108,7 @@
 <meta property="og:site_name" content="Sherlock小蒟蒻">
 <meta property="og:description" content="前言：我觉得随便讲一下前言…对了我好菜弃坑弃坑">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-17T07:25:43.414Z">
+<meta property="og:updated_time" content="2018-05-17T11:54:49.777Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="主席树与整体二分浅析">
 <meta name="twitter:description" content="前言：我觉得随便讲一下前言…对了我好菜弃坑弃坑">
@@ -315,7 +315,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,142
+                  1,787
                 </span>
               
 
@@ -331,7 +331,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5
+                  8
                 </span>
               
             </div>
@@ -352,8 +352,8 @@
       
 
       
-        <h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>我觉得随便讲一下前言…对了我好菜弃坑弃坑<br><a id="more"></a></p>
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>我们先来看一道题目，在分析题目时去深入理解主席树和整体二分算法</p>
+        <h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>我觉得随便讲一下前言…对了我好菜弃坑弃坑<br><a id="more"></a></p>
+<p>我们先来看一道题目，在分析题目时去深入理解主席树和整体二分算法</p>
 <h3 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h3><h4 id="题目大意："><a href="#题目大意：" class="headerlink" title="题目大意："></a>题目大意：</h4><p>给你n个数，多次询问某段区间第k小的数。</p>
 <h4 id="输入格式："><a href="#输入格式：" class="headerlink" title="输入格式："></a>输入格式：</h4><p>第一行两个数n、m，n代表有多少个数，m代表询问数。</p>
 <p>第二行n个数给出，不超过10^9。</p>
@@ -374,62 +374,25 @@
 <li>由于我们构造的主席树具有可减性，我们要找区间 [ i , j ] 的 K 大数，只需要像查找线段树一样，求出 query（ j ) - query ( i - 1 ) 即可，类似于前缀和的思想</li>
 <li>我们来看一下AC代码</li>
 </ul>
-<h4 id="AC代码280ms："><a href="#AC代码280ms：" class="headerlink" title="AC代码280ms："></a>AC代码280ms：</h4><pre><code>#include&lt;cstdio&gt;
-#include&lt;cstring&gt;
-#include&lt;algorithm&gt;
-#define re register int
-#define rep(i,a,b) for(re i=(a);i&lt;=(b);++(i))
-
-using namespace std;
-
-const int N=200010;
-int n,m,le,ri,k,cnt=0;
-struct node{
-    int l,r,val;
-}T[N*60];
-struct num{
-    int val,id;
-    inline bool operator &lt;(const num &amp;rhy) const{return val&lt;rhy.val;}
-}a[N];
-int rank[N],root[N];
-
-inline void insert(int &amp;num,int &amp;x,int l,int r){
-    T[++cnt]=T[x];x=cnt;T[x].val++;
-    if(l==r) return;
-    int mid=(l+r)&gt;&gt;1;
-    if(num&lt;=mid) insert(num,T[x].l,l,mid);
-    else insert(num,T[x].r,mid+1,r); 
-}
-
-inline int query(int t1,int t2,int l,int r,int k){
-    if(l==r) return l;
-    int temp=T[T[t2].l].val-T[T[t1].l].val;
-    int mid=(l+r)&gt;&gt;1;
-    if(k&lt;=temp) return query(T[t1].l,T[t2].l,l,mid,k);
-    else return query(T[t1].r,T[t2].r,mid+1,r,k-temp);
-}
-
-int main(){
-    T[0].l=T[0].r=T[0].val=0;
-    scanf(&quot;%d%d&quot;,&amp;n,&amp;m);root[0]=0;
-    rep(i,1,n) scanf(&quot;%d&quot;,&amp;a[i].val),a[i].id=i;
-    sort(a+1,a+1+n);
-    rep(i,1,n) rank[a[i].id]=i;
-    rep(i,1,n) root[i]=root[i-1],insert(rank[i],root[i],1,n);
-    while(m--){
-        scanf(&quot;%d%d%d&quot;,&amp;le,&amp;ri,&amp;k);
-        printf(&quot;%d\n&quot;,a[query(root[le-1],root[ri],1,n,k)].val);
-    }
-    return 0;
-}
-</code></pre><p>PS：这只是静态主席树，主席树的入门题，还是很好理解的</p>
+<h4 id="AC代码280ms："><a href="#AC代码280ms：" class="headerlink" title="AC代码280ms："></a>AC代码280ms：</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> re register int</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rep(i,a,b) for(re i=(a);i&lt;=(b);++(i))</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N=<span class="number">200010</span>;</span><br><span class="line"><span class="keyword">int</span> n,m,le,ri,k,cnt=<span class="number">0</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> l,r,val;</span><br><span class="line">&#125;T[N*<span class="number">60</span>];</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">num</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> val,id;</span><br><span class="line">    <span class="keyword">inline</span> <span class="keyword">bool</span> <span class="keyword">operator</span> &lt;(<span class="keyword">const</span> num &amp;rhy) <span class="keyword">const</span>&#123;<span class="keyword">return</span> val&lt;rhy.val;&#125;</span><br><span class="line">&#125;a[N];</span><br><span class="line"><span class="keyword">int</span> rank[N],root[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span> &amp;num,<span class="keyword">int</span> &amp;x,<span class="keyword">int</span> l,<span class="keyword">int</span> r)</span></span>&#123;</span><br><span class="line">    T[++cnt]=T[x];x=cnt;T[x].val++;</span><br><span class="line">    <span class="keyword">if</span>(l==r) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">int</span> mid=(l+r)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(num&lt;=mid) insert(num,T[x].l,l,mid);</span><br><span class="line">    <span class="keyword">else</span> insert(num,T[x].r,mid+<span class="number">1</span>,r); </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">query</span><span class="params">(<span class="keyword">int</span> t1,<span class="keyword">int</span> t2,<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(l==r) <span class="keyword">return</span> l;</span><br><span class="line">    <span class="keyword">int</span> temp=T[T[t2].l].val-T[T[t1].l].val;</span><br><span class="line">    <span class="keyword">int</span> mid=(l+r)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(k&lt;=temp) <span class="keyword">return</span> query(T[t1].l,T[t2].l,l,mid,k);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> query(T[t1].r,T[t2].r,mid+<span class="number">1</span>,r,k-temp);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    T[<span class="number">0</span>].l=T[<span class="number">0</span>].r=T[<span class="number">0</span>].val=<span class="number">0</span>;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;n,&amp;m);root[<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">    rep(i,<span class="number">1</span>,n) <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;a[i].val),a[i].id=i;</span><br><span class="line">    sort(a+<span class="number">1</span>,a+<span class="number">1</span>+n);</span><br><span class="line">    rep(i,<span class="number">1</span>,n) rank[a[i].id]=i;</span><br><span class="line">    rep(i,<span class="number">1</span>,n) root[i]=root[i<span class="number">-1</span>],insert(rank[i],root[i],<span class="number">1</span>,n);</span><br><span class="line">    <span class="keyword">while</span>(m--)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d%d%d"</span>,&amp;le,&amp;ri,&amp;k);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,a[query(root[le<span class="number">-1</span>],root[ri],<span class="number">1</span>,n,k)].val);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>PS：这只是静态主席树，主席树的入门题，还是很好理解的</p>
 <h3 id="整体二分做法"><a href="#整体二分做法" class="headerlink" title="整体二分做法"></a>整体二分做法</h3><h4 id="浅谈整体二分："><a href="#浅谈整体二分：" class="headerlink" title="浅谈整体二分："></a>浅谈整体二分：</h4><ul>
 <li>整体二分是二分答案的进化版</li>
 <li>设想我们有 Q 个询问，每次询问一个答案，如果我们用一般的二分答案，那么理论上的时间复杂度就是 O ( f( n )* n ),其中 f（n）表示的是做一次询问的时间复杂度，对于 Q 的值很大时，就难以接受了</li>
 <li>所以我们不仅二分答案区间 l , r ,还二分询问区间 L ,R </li>
 <li>我们用 solve （l , r , L , R ) 表示操作 L ~ R 的数的权值和询问的答案区间为 l , r ,每次二分答案</li>
-<li>我们每次求出 mid 对询问的贡献，</li>
+<li>我们每次求出 mid 对询问的贡献，如果在区间内小于等于 mid 的个数（记为 cnt ）不超过 K ，那么最终的答案也不超过 K ，我们把这一类询问划分到左区间</li>
+<li>类似的如果 cnt 大于 K ，我们把它分到右区间，并且 cnt -= K </li>
+<li>换句话说，如果这个数贡献小于等于 mid ，我们就不用考虑了</li>
+<li>这样划分的层数是 logn ，算上 Q 次询问，再算上算贡献的复杂度，总的时间复杂度就是 O（QlognlogN) ，我们用树状数组维护…</li>
+<li>另外整体二分是需要离线操作的，在本题中跑的要比主席树慢…但是空间要比主席树小得多</li>
+<li>我们来看一下代码</li>
 </ul>
+<h4 id="AC代码730ms"><a href="#AC代码730ms" class="headerlink" title="AC代码730ms"></a>AC代码730ms</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> re register int</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rep(i,a,b) for(re i=(a);i&lt;=(b);++(i))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INF 0x3f3f3f3f</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>; </span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N=<span class="number">500010</span>;</span><br><span class="line"><span class="keyword">int</span> n,m,cnt=<span class="number">0</span>,d,x,y,z;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">question</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> l,r,k,id,p;</span><br><span class="line">&#125;q[N];</span><br><span class="line"><span class="keyword">int</span> tree[N],ans[N];</span><br><span class="line">question q1[N],q2[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">lowbit</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;<span class="keyword">return</span> x&amp;-x;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> k)</span></span>&#123;<span class="keyword">while</span>(x&lt;=n) tree[x]+=k,x+=lowbit(x);&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">query</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;<span class="keyword">int</span> res=<span class="number">0</span>;<span class="keyword">while</span>(x&gt;<span class="number">0</span>) res+=tree[x],x-=lowbit(x);<span class="keyword">return</span> res;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> L,<span class="keyword">int</span> R,<span class="keyword">int</span> l,<span class="keyword">int</span> r)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(l&gt;r||L&gt;R) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">if</span>(l==r) &#123;rep(i,L,R) <span class="keyword">if</span>(q[i].p) ans[q[i].id]=l;<span class="keyword">return</span>;&#125;</span><br><span class="line">    <span class="keyword">int</span> mid=(l+r)&gt;&gt;<span class="number">1</span>,left=<span class="number">0</span>,right=<span class="number">0</span>;</span><br><span class="line">    rep(i,L,R)&#123;</span><br><span class="line">        <span class="keyword">if</span>(q[i].p)&#123;</span><br><span class="line">            <span class="keyword">int</span> temp=query(q[i].r)-query(q[i].l<span class="number">-1</span>);</span><br><span class="line">            <span class="keyword">if</span>(temp&gt;=q[i].k) q1[++left]=q[i];</span><br><span class="line">            <span class="keyword">else</span> q[i].k-=temp,q2[++right]=q[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span>(q[i].l&lt;=mid) q1[++left]=q[i],add(q[i].id,q[i].r);</span><br><span class="line">            <span class="keyword">else</span> q2[++right]=q[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    rep(i,<span class="number">1</span>,left) <span class="keyword">if</span>(!q1[i].p) add(q1[i].id,-q1[i].r);</span><br><span class="line">    rep(i,<span class="number">1</span>,left) q[L+i<span class="number">-1</span>]=q1[i];</span><br><span class="line">    rep(i,<span class="number">1</span>,right) q[i+left+L<span class="number">-1</span>]=q2[i];</span><br><span class="line">    solve(L,L+left<span class="number">-1</span>,l,mid);solve(L+left,R,mid+<span class="number">1</span>,r);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;n,&amp;m);</span><br><span class="line">    rep(i,<span class="number">1</span>,n) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;d);</span><br><span class="line">        q[++cnt]=(question)&#123;d,<span class="number">1</span>,<span class="number">0</span>,i,<span class="number">0</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    rep(i,<span class="number">1</span>,m) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d%d%d"</span>,&amp;x,&amp;y,&amp;z);</span><br><span class="line">        q[++cnt]=(question)&#123;x,y,z,i,<span class="number">1</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    solve(<span class="number">1</span>,cnt,-INF,INF);</span><br><span class="line">    rep(i,<span class="number">1</span>,m) <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,ans[i]);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>本人对整体二分的了解并不是很清晰（逃…<br>所以很口糊以后再补吧<br>另外我真菜…</p>
+<p>联系qq： 953559040</p>
+<p>微博： IncinblePan</p>
+<p>洛谷： SherlockPan</p>
 
       
     </div>
@@ -600,7 +563,7 @@ int main(){
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言："><span class="nav-number">1.</span> <span class="nav-text">前言：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题目"><span class="nav-number">2.</span> <span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目描述："><span class="nav-number">2.1.</span> <span class="nav-text">题目描述：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目大意："><span class="nav-number">2.1.1.</span> <span class="nav-text">题目大意：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输入格式："><span class="nav-number">2.1.2.</span> <span class="nav-text">输入格式：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输出格式："><span class="nav-number">2.1.3.</span> <span class="nav-text">输出格式：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据范围："><span class="nav-number">2.1.4.</span> <span class="nav-text">数据范围：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主席树做法"><span class="nav-number">2.2.</span> <span class="nav-text">主席树做法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#主席树简析："><span class="nav-number">2.2.1.</span> <span class="nav-text">主席树简析：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关于区间查找："><span class="nav-number">2.2.2.</span> <span class="nav-text">关于区间查找：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AC代码280ms："><span class="nav-number">2.2.3.</span> <span class="nav-text">AC代码280ms：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#整体二分做法"><span class="nav-number">2.3.</span> <span class="nav-text">整体二分做法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#浅谈整体二分："><span class="nav-number">2.3.1.</span> <span class="nav-text">浅谈整体二分：</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言："><span class="nav-number">1.</span> <span class="nav-text">前言：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题目描述："><span class="nav-number">2.</span> <span class="nav-text">题目描述：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目大意："><span class="nav-number">2.1.</span> <span class="nav-text">题目大意：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输入格式："><span class="nav-number">2.2.</span> <span class="nav-text">输入格式：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输出格式："><span class="nav-number">2.3.</span> <span class="nav-text">输出格式：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据范围："><span class="nav-number">2.4.</span> <span class="nav-text">数据范围：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主席树做法"><span class="nav-number">3.</span> <span class="nav-text">主席树做法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#主席树简析："><span class="nav-number">3.1.</span> <span class="nav-text">主席树简析：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关于区间查找："><span class="nav-number">3.2.</span> <span class="nav-text">关于区间查找：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AC代码280ms："><span class="nav-number">3.3.</span> <span class="nav-text">AC代码280ms：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#整体二分做法"><span class="nav-number">4.</span> <span class="nav-text">整体二分做法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#浅谈整体二分："><span class="nav-number">4.1.</span> <span class="nav-text">浅谈整体二分：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AC代码730ms"><span class="nav-number">4.2.</span> <span class="nav-text">AC代码730ms</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后记"><span class="nav-number">5.</span> <span class="nav-text">后记</span></a></li></ol></div>
             
 
           </div>
@@ -642,7 +605,7 @@ int main(){
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共8.8k字</span>
+  <span class="post-count">博客全站共9.5k字</span>
 </div>
         
 
