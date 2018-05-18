@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB;
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB;
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB; 
+        border-left-color: #1E92FB; 
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言：我是真的菜…修锅修了好久…所以写前言真的只是随便的并没有什么内容…另外这篇题解可能会折腾我很久…">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Link Cut Tree （动态树）简析">
+<meta property="og:url" content="http://yoursite.com/2018/05/18/LCT/index.html">
+<meta property="og:site_name" content="Sherlock小蒟蒻">
+<meta property="og:description" content="前言：我是真的菜…修锅修了好久…所以写前言真的只是随便的并没有什么内容…另外这篇题解可能会折腾我很久…">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/V2oLGHd.png">
+<meta property="og:image" content="https://i.imgur.com/keQE5QW.png">
+<meta property="og:image" content="https://i.imgur.com/auAkZcG.png">
+<meta property="og:image" content="https://i.imgur.com/WBhEBMP.png">
+<meta property="og:image" content="https://i.imgur.com/JJqkfSY.png">
+<meta property="og:image" content="https://i.imgur.com/bHwBU83.png">
+<meta property="og:image" content="https://i.imgur.com/cTjgv1A.png">
+<meta property="og:image" content="https://i.imgur.com/F0OOy1v.png">
+<meta property="og:image" content="https://i.imgur.com/aeX3Lfl.png">
+<meta property="og:image" content="https://i.imgur.com/SZq92sc.png">
+<meta property="og:image" content="https://i.imgur.com/pRsoEn9.png">
+<meta property="og:image" content="https://i.imgur.com/oNaEj6d.png">
+<meta property="og:image" content="https://i.imgur.com/jcLyZus.png">
+<meta property="og:updated_time" content="2018-05-18T06:22:31.350Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Link Cut Tree （动态树）简析">
+<meta name="twitter:description" content="前言：我是真的菜…修锅修了好久…所以写前言真的只是随便的并没有什么内容…另外这篇题解可能会折腾我很久…">
+<meta name="twitter:image" content="https://i.imgur.com/V2oLGHd.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/18/LCT/"/>
+
+
+
+
+
+  <title>Link Cut Tree （动态树）简析 | Sherlock小蒟蒻</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sherlock小蒟蒻</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/18/LCT/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sherlock Pan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sherlock小蒟蒻">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Link Cut Tree （动态树）简析</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-18T10:11:05+08:00">
+                2018-05-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,516
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  15
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>我是真的菜…修锅修了好久…<br>所以写前言真的只是随便的并没有什么内容…<br>另外这篇题解可能会折腾我很久…<br><a id="more"></a></p>
+<p><strong>侵删</strong></p>
+<hr>
+<h3 id="LCT动态树"><a href="#LCT动态树" class="headerlink" title="LCT动态树"></a>LCT动态树</h3><h4 id="LCT的定义"><a href="#LCT的定义" class="headerlink" title="LCT的定义"></a>LCT的定义</h4><p>  LCT是把一棵树分解成很多条树链，而每条树链用 Splay 维护，如果我们需要对一棵树的路径进行操作的时候，利用 Splay 进行分离与合并，把这条路径储存在同一棵 Splay 上，然后再进行操作这棵 Splay</p>
+<h4 id="LCT的概念"><a href="#LCT的概念" class="headerlink" title="LCT的概念"></a>LCT的概念</h4><p>我们现在来看一下LCT有什么概念…</p>
+<ul>
+<li>Preferred Child：偏好子节点</li>
+<li>Preferred Edge：偏好边</li>
+<li>Preferred Path：偏好路径</li>
+<li>Auxiliary Tree：辅助树</li>
+<li>Path Parent：路径父节点</li>
+</ul>
+<p>为了加深理解，我们来看一下这样一张图</p>
+<p><img src="https://i.imgur.com/V2oLGHd.png" alt=""></p>
+<p>上图中节点1是树的根，1的偏好子节点是2 , 2的偏好子节点有4 ，而3,5,6 并没有偏好子节点<br><strong>偏好子节点</strong>连成的边叫做<strong>偏好边</strong><br>和树链剖分相似的，LCT也把树分成很多条线型的链，但是LCT采用了Splay-Tree来储存这些链</p>
+<p>我们再来看一张图</p>
+<p><img src="https://i.imgur.com/keQE5QW.png" alt=""></p>
+<p>我们把蓝色标记出的链处理成一棵 Splay ，可以发现，离根节点近的边被储存到 Splay 的左边，离根节点较远的被储存到右边，Splay-tree 是以deep 作为关键字排序的。<br>这样的链我们我们称之为<strong>偏好路径</strong></p>
+<h4 id="储存多条树链"><a href="#储存多条树链" class="headerlink" title="储存多条树链"></a>储存多条树链</h4><p>我们称 Splay 的根的父亲为<strong>路径父节点</strong><br>如何储存这棵树，我们来看下面一张图</p>
+<p><img src="https://i.imgur.com/auAkZcG.png" alt=""></p>
+<p>我们把树链当成一个点，轻边（即不是偏好边的边）当成树上的边，可以发现，我们得到的新树要比原先的树小的多，现在我们称修改后的树为虚树<br>如果一棵虚树的数据结构不再发生改变的话，同树链剖分，每个节点都用线型的数据结构加速的话，就能达到 log 级别的效率，我们可以把树链剖分理解成静态的LCT…<br>但是LCT最重要的一点是，它总能在 log 的时间级里，把需要查询的区间构造成主链，我们现在来看看如何实现</p>
+<h4 id="LCT的基本操作"><a href="#LCT的基本操作" class="headerlink" title="LCT的基本操作"></a>LCT的基本操作</h4><p>构造主链的操作并不是只基于一种基础操作，而且LCT不仅仅只需要构造主链这种操作，我们来看看LCT有哪些基本操作</p>
+<h5 id="access"><a href="#access" class="headerlink" title="access"></a>access</h5><p>access操作是LCT所有操作的基础<br>如果我们调用access操作，那么操作完成后，根节点到节点 i 就变成了一条偏好路径，这条路径上的所有点就变成了偏好孩子。同时，这条路径变成了一棵 Splay<br>假设我们访问到节点 i ，先把节点 i 伸展到该树的根，再断开它的右孩子（访问到的节点是没有右孩子的…)，然后我们再访问 i 的路径父节点 x ，把节点 i 接在 x 的右节点上，不断重复该操作，最后，我们就能得到一条从根节点连到 i 的一条树链</p>
+<p><img src="https://i.imgur.com/WBhEBMP.png" alt=""></p>
+<p>上图是一棵虚树，假设我们需要access（2）</p>
+<p>先旋转点 2 至所在 Splay-Tree 的根，再断开点 3 的右孩子，旋转点3  至它的根，将点 2 连接上</p>
+<p><img src="https://i.imgur.com/JJqkfSY.png" alt=""></p>
+<p>现在我们要访问的节点 2 已经在根为 3 的 Splay 上，来看看整棵树的形状</p>
+<p><img src="https://i.imgur.com/bHwBU83.png" alt=""></p>
+<p>我们现在再旋转点 1，把点 1 的右孩子接在点 3 上，可以发现，整棵树的根 1 已经和我们访问的点 2，在同一条树链上了</p>
+<p><img src="https://i.imgur.com/cTjgv1A.png" alt=""></p>
+<p>看样子操作很长其实也只要写一个循环就可以了，我们来看一下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">access</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> t=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(x)&#123;splay(x);ch[x][<span class="number">1</span>]=t;t=x;x=fa[x];&#125;</span><br><span class="line">    <span class="keyword">return</span> t;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="findroot"><a href="#findroot" class="headerlink" title="findroot"></a>findroot</h5><p>查找树根操作找的是原树的树根（即主链中 deep 的最小点），并不是LCT的树根</p>
+<p>我们在access（ i ），之后，根节点是 包括 i 的辅助树中的 deep 的最小点，因此，我们只需要先把 i 旋转到它所在数的根，再从 i 开始一直往左走，最后的节点就是我们要询问的结果</p>
+<p>我们来看一下代码实现</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">    access(x);splay(x);<span class="keyword">int</span> now=x;</span><br><span class="line">    <span class="keyword">while</span>(ch[now][<span class="number">0</span>]!=<span class="number">0</span>) now=ch[now][<span class="number">0</span>];<span class="keyword">return</span> now;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="makeroot"><a href="#makeroot" class="headerlink" title="makeroot"></a>makeroot</h5><p>makeroot的意思是改变原树的树根，有时候我们需要这样做来进行更多操作<br>我们在改变树根的时候，最好把原先的根节点和要改变成树根的节点在同一条链上，这样我们就不会牵扯到很多的树链，操作也不会变得复杂，因此，我们用access操作将我们要改变的点 i 和根 x 在存在于同一条链上<br>我们先来看一张图</p>
+<p><img src="https://i.imgur.com/F0OOy1v.png" alt=""></p>
+<p>假设我们要将根点 1 换成点 6，换完之后的样式是上图<br>可以发现，除去主链之外的所有链，在换根操作的时候都是不受影响的<br>但是红色标记的主链，是被翻转的。这意味着，我们每换一次根，在主链这棵 Splay 上都是被翻转的，这需要我们在 Splay 里的操作里用上区间翻转…<br>我们用上类似于线段树的延迟标记，在进行 Splay 的操作中进行释放<br>现在我们先来看一下代码实现</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">makeroot</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">	access(x);splay(x);tag[x]^=<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="link"><a href="#link" class="headerlink" title="link"></a>link</h5><p>link 操作的目的是合并两棵 LCT，我们来看一下思路（以下思路基于这两棵LCT不同<br>如果我们要合并两个点 x 和 y ，只需要将 x makeroot 到根，再使点 x 的父亲节点为 y ，这时 x 所在的 Splay 和 y 有一条边相连，但是合并后的树并没有一个根，这时我们就需要把 y 当做新树的根，splay（y)即可(其实重新换树根也是可以的…<br>我们来看两张图增进理解</p>
+<p><img src="https://i.imgur.com/aeX3Lfl.png" alt=""></p>
+<p><img src="https://i.imgur.com/SZq92sc.png" alt=""></p>
+<p>我们来看一下代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">link</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(find(x)!=find(y)) makeroot(x);fa[x]=y;splay(y);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="cut"><a href="#cut" class="headerlink" title="cut"></a>cut</h5><p>cut 操作和 link 操作相反，它的目的是断开一棵LCT<br>假设我们需要断开点 x 与点 y 的边<br>我们先把点 x makeroot，再access( y ) ,这时 x 和 y 就在同一条链上了</p>
+<p><img src="https://i.imgur.com/pRsoEn9.png" alt=""></p>
+<p>假设我们要断开点 1 ，和点 5</p>
+<p><img src="https://i.imgur.com/oNaEj6d.png" alt=""></p>
+<p>然后我们再断开</p>
+<p><img src="https://i.imgur.com/jcLyZus.png" alt=""></p>
+<p>断开操作就完成了，我们看一下代码实现，其实很短…</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">cut</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">    makeroot(x);access(y);splay(y);</span><br><span class="line">    <span class="keyword">if</span>(fa[x]!=y||!ch[y][<span class="number">0</span>]) <span class="keyword">return</span>;</span><br><span class="line">    ch[y][<span class="number">0</span>]=<span class="number">0</span>;fa[x]=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>另外的，我们需要进行特判（我就在这里卡了很久…我好菜啊<br>点 x 在这之后就不是树的根了，若点 x 的父亲节点不是 y 的时候，这两点已经没有边相连，我们直接返回即可<br>还有，一个点的左儿子是从根部来的，右儿子是到 deep 更深的地方，如果点 y 的左儿子没有的话，我们也需要直接返回，直接进行 cut 操作会破坏原树的性质</p>
+<h5 id="Splay-Tree的操作"><a href="#Splay-Tree的操作" class="headerlink" title="Splay-Tree的操作"></a>Splay-Tree的操作</h5><p>在LCT中，Splay 的操作和一般的 Splay 操作略不同（我在这里卡了死循环…）我们来看看有哪些不同的操作</p>
+<ul>
+<li><strong>isroot</strong></li>
+</ul>
+<p>我们在 Splay 中判断根的方式是该根是否有父亲节点，但是在LCT中有很多棵 Splay ，在这棵 Splay 中的根可能指向别的树的节点，这样我们就找不到根了…<br>所以我们需要反过来，判断该点的父亲节点的儿子是否有该点，即求该点的父亲节点的偏好子节点是否为该点，我们来看一下代码实现</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">bool</span> <span class="title">isroot</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> ch[fa[x]][<span class="number">0</span>]!=x&amp;&amp;ch[fa[x]][<span class="number">1</span>]!=x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>rotate</strong></li>
+</ul>
+<p>我们在进行旋转操作的时候还是要多加入一句话<br>如果旋转的点 i 的爷爷节点与 i 并不是在同一棵树上的话，我们就不需要把 i 的爷爷节点的儿子指向 i （否则破坏性质<br>来看一下整个的代码实现（其实80%差不多</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> y=fa[x],z=fa[y],d=(ch[y][<span class="number">1</span>]==x);</span><br><span class="line">    <span class="keyword">if</span> (!check(y)) ch[z][ch[z][<span class="number">1</span>]==y]=x;</span><br><span class="line">    ch[y][d]=ch[x][!d],fa[ch[x][!d]]=y;</span><br><span class="line">    ch[x][!d]=y,fa[y]=x;fa[x]=z;update(y);	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>Splay</strong></li>
+</ul>
+<p>Splay 操作也是有很多不同的（因此我拉了模板的 Splay 之后才发现死循环的原因…<br>我们在进行伸展的时候，是不能伸展到别的树的，然后我们需要释放标记（我们上面讲过的翻转标记<br>用一个小堆栈维护，我们一直向上找父亲节点，然后把这一条路径上的标记释放，看一下代码实现</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">splay</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="built_in">stack</span>[top=<span class="number">1</span>]=x; <span class="keyword">for</span> (<span class="keyword">int</span> i=x;!check(i);i=fa[i]) <span class="built_in">stack</span>[++top]=fa[i];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=top;i&gt;=<span class="number">1</span>;i--) push_down(<span class="built_in">stack</span>[i]);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> y=fa[x],z=fa[y];!check(x);y=fa[x],z=fa[y])&#123;</span><br><span class="line">        <span class="keyword">if</span> (!check(y))&#123;((ch[z][<span class="number">0</span>]==y)^(ch[y][<span class="number">0</span>]==x))?rotate(x):rotate(y);&#125;</span><br><span class="line">        rotate(x);</span><br><span class="line">    &#125; update(x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再看一下标记的释放</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">push_down</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(tag[x]) &#123;</span><br><span class="line">        tag[ch[x][<span class="number">0</span>]]^=<span class="number">1</span>,tag[ch[x][<span class="number">1</span>]]^=<span class="number">1</span>;</span><br><span class="line">        swap(ch[x][<span class="number">0</span>],ch[x][<span class="number">1</span>]);tag[x]=<span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="其他操作简述"><a href="#其他操作简述" class="headerlink" title="其他操作简述"></a>其他操作简述</h5><p>实际上我们还可以用 LCT 求LCA，我在这里就不多解释了（我也不会…</p>
+<p>关于询问实际上就是求 Splay 维护的信息，也是很简单的</p>
+<p>这样我觉得我讲的还是蛮详细的，这是入门的LCT，我们现在来看一下模板题</p>
+<hr>
+<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>给定n个点以及每个点的权值，要你处理接下来的m个操作。操作有4种。操作从0到3编号。点从1到n编号。</p>
+<p>0：后接两个整数(x，y)，代表询问从x到y的路径上的点的权值的xor和。保证x到y是联通的。</p>
+<p>1：后接两个整数(x，y)，代表连接x到y，若x到y已经联通则无需连接。</p>
+<p>2：后接两个整数(x，y)，代表删除边(x，y)，不保证边(x，y)存在。</p>
+<p>3：后接两个整数(x，y)，代表将点x上的权值变成y。</p>
+<h4 id="输入输出格式"><a href="#输入输出格式" class="headerlink" title="输入输出格式"></a>输入输出格式</h4><h5 id="输入格式："><a href="#输入格式：" class="headerlink" title="输入格式："></a>输入格式：</h5><p>第1行两个整数，分别为n和m，代表点数和操作数。</p>
+<p>第2行到第n+1行，每行一个整数，整数在［1，10^9］内，代表每个点的权值。</p>
+<p>第n+2行到第n+m+1行，每行三个整数，分别代表操作类型和操作所需的量。</p>
+<h5 id="输出格式："><a href="#输出格式：" class="headerlink" title="输出格式："></a>输出格式：</h5><p>对于每一个0号操作，你须输出x到y的路径上点权的xor和。</p>
+<h4 id="输入输出样例"><a href="#输入输出样例" class="headerlink" title="输入输出样例"></a>输入输出样例</h4><h5 id="输入样例-1："><a href="#输入样例-1：" class="headerlink" title="输入样例#1："></a>输入样例#1：</h5><pre><code>3 3 
+1
+2
+3
+1 1 2
+0 1 2 
+0 1 1
+</code></pre><h5 id="输出样例-1："><a href="#输出样例-1：" class="headerlink" title="输出样例#1："></a>输出样例#1：</h5><pre><code>3
+1
+</code></pre><h4 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h4><p>数据范围：1 ≤ N , M ≤ 3*10<sup>5</sup></p>
+<h4 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h4><ul>
+<li>赤裸裸的模板…</li>
+<li>它叫你干嘛你就干嘛…</li>
+<li>所有操作在上面都有讲过…</li>
+<li>但是好像LCT跑的不是很快…（起码我觉得</li>
+<li>话说LCT的代码可以压成19行也是蛮好看的…</li>
+<li>LCT这种数据结构一定要多练也很容易写错的…</li>
+</ul>
+<h4 id="AC代码氧气728ms"><a href="#AC代码氧气728ms" class="headerlink" title="AC代码氧气728ms"></a>AC代码氧气728ms</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// luogu-judger-enable-o2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> re register int</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rep(i,a,b) for(re i=(a);i&lt;=(b);++(i))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> drep(i,a,b) for(re i=(a);i&gt;=(b);--(i))</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N=<span class="number">300010</span>;</span><br><span class="line"><span class="keyword">int</span> n,m;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">LCT</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> a[N],fa[N],ch[N][<span class="number">2</span>],tag[N],sum[N],<span class="built_in">stack</span>[N],top;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">bool</span> <span class="title">check</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;<span class="keyword">return</span> ch[fa[x]][<span class="number">0</span>]!=x&amp;&amp;ch[fa[x]][<span class="number">1</span>]!=x;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">push_down</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(tag[x]) &#123;</span><br><span class="line">            tag[ch[x][<span class="number">0</span>]]^=<span class="number">1</span>,tag[ch[x][<span class="number">1</span>]]^=<span class="number">1</span>;</span><br><span class="line">            swap(ch[x][<span class="number">0</span>],ch[x][<span class="number">1</span>]);tag[x]=<span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;sum[x]=sum[ch[x][<span class="number">0</span>]]^sum[ch[x][<span class="number">1</span>]]^a[x];&#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> y=fa[x],z=fa[y],d=(ch[y][<span class="number">1</span>]==x);</span><br><span class="line">        <span class="keyword">if</span> (!check(y)) ch[z][ch[z][<span class="number">1</span>]==y]=x;</span><br><span class="line">        ch[y][d]=ch[x][!d],fa[ch[x][!d]]=y;</span><br><span class="line">        ch[x][!d]=y,fa[y]=x;fa[x]=z;update(y);	</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">splay</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">        <span class="built_in">stack</span>[top=<span class="number">1</span>]=x; <span class="keyword">for</span> (<span class="keyword">int</span> i=x;!check(i);i=fa[i]) <span class="built_in">stack</span>[++top]=fa[i];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=top;i&gt;=<span class="number">1</span>;i--) push_down(<span class="built_in">stack</span>[i]);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> y=fa[x],z=fa[y];!check(x);y=fa[x],z=fa[y])&#123;</span><br><span class="line">            <span class="keyword">if</span> (!check(y))&#123;((ch[z][<span class="number">0</span>]==y)^(ch[y][<span class="number">0</span>]==x))?rotate(x):rotate(y);&#125;</span><br><span class="line">            rotate(x);</span><br><span class="line">        &#125;update(x);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">access</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> t=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(x)&#123;splay(x);ch[x][<span class="number">1</span>]=t;t=x;x=fa[x];&#125;</span><br><span class="line">        <span class="keyword">return</span> t;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">        access(x);splay(x);<span class="keyword">int</span> now=x;</span><br><span class="line">        <span class="keyword">while</span>(ch[now][<span class="number">0</span>]!=<span class="number">0</span>) now=ch[now][<span class="number">0</span>];<span class="keyword">return</span> now;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">makeroot</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;access(x);splay(x);tag[x]^=<span class="number">1</span>;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">link</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;<span class="keyword">if</span>(find(x)!=find(y)) makeroot(x);fa[x]=y;splay(y);&#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">cut</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">        makeroot(x);access(y);splay(y);</span><br><span class="line">        <span class="keyword">if</span>(fa[x]!=y||!ch[y][<span class="number">0</span>]) <span class="keyword">return</span>;</span><br><span class="line">        ch[y][<span class="number">0</span>]=<span class="number">0</span>;fa[x]=<span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">change</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;sum[x]=sum[x]^a[x]^y;a[x]=y;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">query</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;makeroot(x);access(y);splay(y);<span class="keyword">return</span> sum[y];&#125;</span><br><span class="line">&#125;LCT;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;n,&amp;m);</span><br><span class="line">    rep(i,<span class="number">1</span>,n) <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;LCT.a[i]);</span><br><span class="line">    <span class="keyword">while</span>(m--)&#123;</span><br><span class="line">        <span class="keyword">int</span> opt,x,y;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d%d%d"</span>,&amp;opt,&amp;x,&amp;y);</span><br><span class="line">        <span class="keyword">if</span>(opt==<span class="number">0</span>) &#123;<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,LCT.query(x,y));&#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(opt==<span class="number">1</span>) &#123;<span class="keyword">if</span>(LCT.find(x)!=LCT.find(y)) LCT.link(x,y);&#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(opt==<span class="number">2</span>)	&#123;LCT.cut(x,y);&#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(opt==<span class="number">3</span>) &#123;LCT.change(x,y);&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为了方便看我就放在结构体里写函数了，可能加个读优616ms…</p>
+<hr>
+<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>关于LCT其实也蛮详细的了<br>我本来想再拉一道LCT的例题那就改天吧<br>欢迎指正…我觉得我好菜啊<br>有时候一天一篇博客也是挺累的…<br>而且昨天博客出锅修了我好久…<br>本人联系方式如下（因为懒得挂评论啊…</p>
+<p>qq： 953559040</p>
+<p>微博： IncinblePan</p>
+<p>洛谷： SherlockPan</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/17/主席树P3168/" rel="next" title="CQOI2015  任务查询系统">
+                <i class="fa fa-chevron-left"></i> CQOI2015  任务查询系统
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Sherlock Pan" />
+            
+              <p class="site-author-name" itemprop="name">Sherlock Pan</p>
+              <p class="site-description motion-element" itemprop="description">每个人为不同的理由戴着面具说谎，动机也只有一个名字那叫做欲望</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/6002851702/profile?topnav=1&wvr=6" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-globe"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/sherlock-76-85/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言："><span class="nav-number">1.</span> <span class="nav-text">前言：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LCT动态树"><span class="nav-number">2.</span> <span class="nav-text">LCT动态树</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#LCT的定义"><span class="nav-number">2.1.</span> <span class="nav-text">LCT的定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LCT的概念"><span class="nav-number">2.2.</span> <span class="nav-text">LCT的概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#储存多条树链"><span class="nav-number">2.3.</span> <span class="nav-text">储存多条树链</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LCT的基本操作"><span class="nav-number">2.4.</span> <span class="nav-text">LCT的基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#access"><span class="nav-number">2.4.1.</span> <span class="nav-text">access</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#findroot"><span class="nav-number">2.4.2.</span> <span class="nav-text">findroot</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#makeroot"><span class="nav-number">2.4.3.</span> <span class="nav-text">makeroot</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#link"><span class="nav-number">2.4.4.</span> <span class="nav-text">link</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#cut"><span class="nav-number">2.4.5.</span> <span class="nav-text">cut</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Splay-Tree的操作"><span class="nav-number">2.4.6.</span> <span class="nav-text">Splay-Tree的操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#其他操作简述"><span class="nav-number">2.4.7.</span> <span class="nav-text">其他操作简述</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题目"><span class="nav-number">3.</span> <span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述"><span class="nav-number">3.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输入输出格式"><span class="nav-number">3.2.</span> <span class="nav-text">输入输出格式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#输入格式："><span class="nav-number">3.2.1.</span> <span class="nav-text">输入格式：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#输出格式："><span class="nav-number">3.2.2.</span> <span class="nav-text">输出格式：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输入输出样例"><span class="nav-number">3.3.</span> <span class="nav-text">输入输出样例</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#输入样例-1："><span class="nav-number">3.3.1.</span> <span class="nav-text">输入样例#1：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#输出样例-1："><span class="nav-number">3.3.2.</span> <span class="nav-text">输出样例#1：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#说明"><span class="nav-number">3.4.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解题过程"><span class="nav-number">3.5.</span> <span class="nav-text">解题过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AC代码氧气728ms"><span class="nav-number">3.6.</span> <span class="nav-text">AC代码氧气728ms</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后记"><span class="nav-number">4.</span> <span class="nav-text">后记</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sherlock Pan</span>
+
+  
+</div>
+
+
+
+  <div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共14.5k字</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
