@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB;
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB;
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB; 
+        border-left-color: #1E92FB; 
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言这几天刷 bzoj 的题，碰到几道差分约束的…想到博客里还没有这类题目（图论也没有…所以来填一下这方面的空缺">
+<meta property="og:type" content="article">
+<meta property="og:title" content="差分约束例题">
+<meta property="og:url" content="http://yoursite.com/2018/05/25/差分约束/index.html">
+<meta property="og:site_name" content="Sherlock小蒟蒻">
+<meta property="og:description" content="前言这几天刷 bzoj 的题，碰到几道差分约束的…想到博客里还没有这类题目（图论也没有…所以来填一下这方面的空缺">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/USbYjqP.png">
+<meta property="og:image" content="https://i.imgur.com/UtxlEu1.png">
+<meta property="og:updated_time" content="2018-05-25T08:56:47.791Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="差分约束例题">
+<meta name="twitter:description" content="前言这几天刷 bzoj 的题，碰到几道差分约束的…想到博客里还没有这类题目（图论也没有…所以来填一下这方面的空缺">
+<meta name="twitter:image" content="https://i.imgur.com/USbYjqP.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/25/差分约束/"/>
+
+
+
+
+
+  <title>差分约束例题 | Sherlock小蒟蒻</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sherlock小蒟蒻</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/25/差分约束/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sherlock Pan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sherlock小蒟蒻">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">差分约束例题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-25T14:49:36+08:00">
+                2018-05-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,344
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  14
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这几天刷 bzoj 的题，碰到几道差分约束的…<br>想到博客里还没有这类题目（图论也没有…<br>所以来填一下这方面的空缺</p>
+<a id="more"></a>
+<p><strong>侵删</strong></p>
+<hr>
+<h3 id="简述差分约束"><a href="#简述差分约束" class="headerlink" title="简述差分约束"></a>简述差分约束</h3><p>我们来看一下这个看样子很高大上的东西<br>其实这玩意就是跑最短路的<br>我觉得最短路不需要进行讲解基本知识嘛<br>所以我们直接看差分约束的精髓</p>
+<p>如果一个系统由 n 个元素 m 个不等式组成，并且每个不等式都是类似于 a - b &gt; c 的（意思就是说长成这样的），把这个不等式移项，我们可以得到 a &gt; b + c ，这表示什么意思呢？<br>我们把 a , b 都看成一个点，如果满足这条不等式，不就代表 b 到 a 的有向边权值大于 c 吗（同大于等于，小于，小于等于，等于），我们也可以说成 a 到 b 有一条权值小于 -c 的边</p>
+<p>因此我们发现，对于每个不等式（只有两个元素），类似于 a[i]-a[j]&lt;=c ,我们可以认为对于节点 j 和 i 建立一条 j -&gt; i 的有向边，且边权为 c 。而如果我们要求点 i 的最短路，即求 a[i] 到 a[0] 的最大值</p>
+<p>我们来看一组不等式</p>
+<ul>
+<li>x1 - x0 &lt;=2  (1)</li>
+<li>x2 - x0 &lt;=7  (2)</li>
+<li>x3 - x0 &lt;=8  (3)</li>
+<li>x2 - x1 &lt;=3  (4)</li>
+<li>x3 - x2 &lt;=2  (5)</li>
+</ul>
+<p>我们先整理出一些数与数关系</p>
+<ul>
+<li>(3) ： x3 - x0 &lt;= 8</li>
+<li>(2) + (5) ： x3 - x0 &lt;= 9</li>
+<li>(1) + (4) + (5) ： x3 - x2 &lt;= 7</li>
+</ul>
+<p>所以我们最终可以得到 x3 - x0 &lt;= 7</p>
+<p>先把上面内容放在一旁，我们来看一道求最短路的题:</p>
+<p>给定四个小岛以及小岛之间的有向距离，问从第0个岛到第3个岛的最短距离。箭头表示有向边，蓝色数字表示权值（画的丑勿介</p>
+<p><img src="https://i.imgur.com/USbYjqP.png" alt=""></p>
+<p>好了我们有一张很好的图…<br>这是一道很简单的最短路问题，我们枚举路线，一共有三条</p>
+<ul>
+<li>0 -&gt; 3   长度为 8</li>
+<li>0 -&gt; 2 -&gt; 3   长度为 7 + 2 = 9</li>
+<li>0 -&gt; 1 -&gt; 2 -&gt; 3  长度为 2 + 3 + 2 = 7</li>
+</ul>
+<p>所以 x0 到 x3 的距离最小为 7 ，是不是觉得跟上面的不等式有什么关系？<br>我们结合求单源最短路的方法（ spfa ，Dijkstra ）很容易发现我们一开始讲的差分约束就是一种数形结合的例子，对于每一个不等式，我们都可以相应的建立一条有向边，上面举例的不等式和图就是可以互相转化的（没毛病吧？！<br>实际上我们接触很频繁的三角不等式，对应的建图</p>
+<p><img src="https://i.imgur.com/UtxlEu1.png" alt=""></p>
+<p>很容易就可以知道 min ( b , a+c ),正好对应 a —&gt; c 的最短路。我们将三个不等式推广到 m 个，变量从 3 个推广到 n 个，就变成 n 个点 m 条边的最短路了</p>
+<p>我们现在来看一下<strong>解的存在性</strong></p>
+<p>我们求一条最短路，在图中可能会存在负环或者到终点不存在连边</p>
+<ul>
+<li>因此对应负环，在图中一定是不存在最短路的，这种情况是无解的</li>
+<li>如果我们连不到终点，表示起点和终点并没有约束关系，因此这种情况的结果是无限多个解</li>
+<li>在实际问题中我们要加以判断，可能会导致不同的输出</li>
+</ul>
+<p>综上所述，一个差分约束系统我们有三种解：有解，无解，有无限多解</p>
+<p>现在我们来看一下别的<strong>不等式情况</strong></p>
+<ul>
+<li>如果我们将原先的 &lt;= 变成 &gt;= ，我们求两点之间之差的最小值，求的是两点之间的最长路（数形结合）我们同样可以从三角不等式进行推广</li>
+<li>如果给出的不等式有”&lt;=”也有”&gt;=”，又该如何解决呢？很明显，首先需要关注最后的问题是什么，如果需要求的是两个变量差的最大值，那么需要将所有不等式转变成”&lt;=”的形式，建图后求最短路；相反，如果需要求的是两个变量差的最小值，那么需要将所有不等式转化成”&gt;=”，建图后求最长路。</li>
+<li>如果存在类似于 a - b = c 的不等式，我们可以转化成 a - b &gt;= c 或者 a - b &lt;= c，再根据实际情况进行建边</li>
+<li>另外，如果这些变量都是整数，在遇到形如 a - b &gt; c 的情况，我们不能用小于号建边（因为不等），我们要把它们转变成带等号的不等式，比如 a - b &gt;= c+1</li>
+</ul>
+<p>我尽量保持原创，图也是自己画的<br>差分约束其实很简单说是简述我也写了很多…<br>所以我们现在来看两道题目</p>
+<hr>
+<h3 id="SCOI2011-糖果"><a href="#SCOI2011-糖果" class="headerlink" title="SCOI2011 糖果"></a>SCOI2011 糖果</h3><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>幼儿园里有N个小朋友，lxhgww老师现在想要给这些小朋友们分配糖果，要求每个小朋友都要分到糖果。但是小朋友们也有嫉妒心，总是会提出一些要求，比如小明不希望小红分到的糖果比他的多，于是在分配糖果的时候，lxhgww需要满足小朋友们的K个要求。幼儿园的糖果总是有限的，lxhgww想知道他至少需要准备多少个糖果，才能使得每个小朋友都能够分到糖果，并且满足小朋友们所有的要求。</p>
+<h4 id="输入输出格式"><a href="#输入输出格式" class="headerlink" title="输入输出格式"></a>输入输出格式</h4><h5 id="输入格式："><a href="#输入格式：" class="headerlink" title="输入格式："></a>输入格式：</h5><p>输入的第一行是两个整数N，K。接下来K行，表示这些点需要满足的关系，每行3个数字，X，A，B。如果X=1， 表示第A个小朋友分到的糖果必须和第B个小朋友分到的糖果一样多；如果X=2， 表示第A个小朋友分到的糖果必须少于第B个小朋友分到的糖果；如果X=3， 表示第A个小朋友分到的糖果必须不少于第B个小朋友分到的糖果；如果X=4， 表示第A个小朋友分到的糖果必须多于第B个小朋友分到的糖果；如果X=5， 表示第A个小朋友分到的糖果必须不多于第B个小朋友分到的糖果；</p>
+<h5 id="输出格式："><a href="#输出格式：" class="headerlink" title="输出格式："></a>输出格式：</h5><p>输出一行，表示lxhgww老师至少需要准备的糖果数，如果不能满足小朋友们的所有要求，就输出-1。</p>
+<h4 id="输入输出样例"><a href="#输入输出样例" class="headerlink" title="输入输出样例"></a>输入输出样例</h4><p>#####输入样例#1： </p>
+<pre><code>5 7
+1 1 2
+2 3 2
+4 4 1
+3 4 5
+5 4 5
+2 3 5
+4 5 1
+</code></pre><p>#####输出样例#1： </p>
+<pre><code>11
+</code></pre><h4 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h4><p>【数据范围】</p>
+<p>对于30%的数据，保证 N&lt;=100</p>
+<p>对于100%的数据，保证 N&lt;=100000</p>
+<p>对于所有的数据，保证 K&lt;=100000，1&lt;=X&lt;=5，1&lt;=A, B&lt;=N</p>
+<h4 id="解题分析"><a href="#解题分析" class="headerlink" title="解题分析"></a>解题分析</h4><p>我们发现这道题有很多不等式…<br>看到不等式我就想到了差分约束<br>不过这道题的约束条件很多，我们要区分好，不能在建边的时候弄混<br>used用来判断负环因为一个点不可能被经过超过 n 次<br>实际上 spfa 是从 0 开始跑的我直接进队列也是一样的…<br>可能我建边跟网上很多题解不一样反过来也是一样的<br>对于每次读入情况第二种和第四种 a == b 是要进行特判的<br>另外不能忘记判负环的情况<br>计算答案的时候 long long 要开不然会 WA<br>注意空间开大一点<br>建议用 BZOJ 跑洛谷数据太水了相同代码BZOJ RE90分洛谷AC…<br>交代就那么多有什么东西代码里看好了，就是一个 spfa 要小心</p>
+<h4 id="AC代码96ms"><a href="#AC代码96ms" class="headerlink" title="AC代码96ms"></a>AC代码96ms</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// luogu-judger-enable-o2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cctype&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> re register int</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> xep(i,x) for(re i=head[x];i;i=nxt[i])</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ll long long</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N=<span class="number">100010</span>;</span><br><span class="line"><span class="keyword">int</span> n,k,cnt=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> head[N&lt;&lt;<span class="number">2</span>],nxt[N&lt;&lt;<span class="number">2</span>],to[N&lt;&lt;<span class="number">2</span>],val[N&lt;&lt;<span class="number">2</span>];</span><br><span class="line"><span class="keyword">int</span> vis[N],sum[N],used[N];</span><br><span class="line">ll ans=<span class="number">0</span>;</span><br><span class="line"><span class="built_in">queue</span> &lt; <span class="keyword">int</span> &gt; q;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> X=<span class="number">0</span>,w=<span class="number">0</span>; <span class="keyword">char</span> ch=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(!<span class="built_in">isdigit</span>(ch)) &#123;w|=ch==<span class="string">'-'</span>;ch=getchar();&#125;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">isdigit</span>(ch)) X=(X&lt;&lt;<span class="number">3</span>)+(X&lt;&lt;<span class="number">1</span>)+(ch^<span class="number">48</span>),ch=getchar();</span><br><span class="line">    <span class="keyword">return</span> w?-X:X;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y,<span class="keyword">int</span> v)</span></span>&#123;</span><br><span class="line">    to[++cnt]=y;nxt[cnt]=head[x];</span><br><span class="line">    head[x]=cnt;val[cnt]=v;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">bool</span> <span class="title">spfa</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(!q.empty())&#123;</span><br><span class="line">        <span class="keyword">int</span> u=q.front();</span><br><span class="line">        vis[u]=<span class="number">0</span>;q.pop();</span><br><span class="line">        xep(i,u)&#123;</span><br><span class="line">            <span class="keyword">int</span> v=to[i];</span><br><span class="line">            <span class="keyword">if</span>(sum[v]&lt;sum[u]+val[i])&#123;</span><br><span class="line">                sum[v]=sum[u]+val[i];</span><br><span class="line">                used[v]++;</span><br><span class="line">                <span class="keyword">if</span>(used[v]&gt;n)</span><br><span class="line">                    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">if</span>(!vis[v]) vis[v]=<span class="number">1</span>,q.push(v); </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    n=read();k=read();</span><br><span class="line">    <span class="keyword">while</span>(k--)&#123;</span><br><span class="line">        <span class="keyword">int</span> opt,a,b;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d%d%d"</span>,&amp;opt,&amp;a,&amp;b);</span><br><span class="line">        <span class="keyword">switch</span>(opt)&#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">1</span>:&#123;add(a,b,<span class="number">0</span>);add(b,a,<span class="number">0</span>);<span class="keyword">break</span>;&#125;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">2</span>:&#123;</span><br><span class="line">                <span class="keyword">if</span>(a==b)&#123;</span><br><span class="line">                    <span class="built_in">puts</span>(<span class="string">"-1"</span>);<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                add(a,b,<span class="number">1</span>);<span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">3</span>:&#123;add(b,a,<span class="number">0</span>);<span class="keyword">break</span>;&#125;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">4</span>:&#123;</span><br><span class="line">                <span class="keyword">if</span>(a==b)&#123;</span><br><span class="line">                    <span class="built_in">puts</span>(<span class="string">"-1"</span>);</span><br><span class="line">                    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                add(b,a,<span class="number">1</span>);<span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">5</span>:&#123;add(a,b,<span class="number">0</span>);<span class="keyword">break</span>;&#125;</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(re i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">        vis[i]=<span class="number">1</span>,sum[i]=<span class="number">1</span>,q.push(i);</span><br><span class="line">    <span class="keyword">if</span>(!spfa())&#123;</span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">"-1"</span>);<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(re i=<span class="number">1</span>;i&lt;=n;i++) ans+=sum[i];</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%lld\n"</span>,ans);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="BZOJ3436-小K的农场"><a href="#BZOJ3436-小K的农场" class="headerlink" title="BZOJ3436 小K的农场"></a>BZOJ3436 小K的农场</h3><h4 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h4><p>小K在MC里面建立很多很多的农场，总共n个，以至于他自己都忘记了每个农场中种植作物的具体数量了，他只记得一些含糊的信息（共m个），以下列三种形式描述：<br>农场a比农场b至少多种植了c个单位的作物，<br>农场a比农场b至多多种植了c个单位的作物，<br>农场a与农场b种植的作物数一样多。<br>但是，由于小K的记忆有些偏差，所以他想要知道存不存在一种情况，使得农场的种植作物数量与他记忆中的所有信息吻合。</p>
+<h4 id="输入输出格式-1"><a href="#输入输出格式-1" class="headerlink" title="输入输出格式"></a>输入输出格式</h4><h5 id="输入格式：-1"><a href="#输入格式：-1" class="headerlink" title="输入格式："></a>输入格式：</h5><p>第一行包括两个整数 n 和 m，分别表示农场数目和小 K 记忆中的信息数目。<br>接下来 m 行：<br>如果每行的第一个数是 1，接下来有 3 个整数 a,b,c，表示农场 a 比农场 b 至少多种植了 c 个单位的作物。<br>如果每行的第一个数是 2，接下来有 3 个整数 a,b,c，表示农场 a 比农场 b 至多多种植了 c 个单位的作物。如果每行的第一个数是 3，家下来有 2 个整数 a,b，表示农场 a 终止的数量和 b 一样多。</p>
+<h5 id="输出格式：-1"><a href="#输出格式：-1" class="headerlink" title="输出格式："></a>输出格式：</h5><p>如果存在某种情况与小 K 的记忆吻合，输出“Yes”，否则输出“No”。</p>
+<h4 id="输入输出样例-1"><a href="#输入输出样例-1" class="headerlink" title="输入输出样例"></a>输入输出样例</h4><h5 id="输入样例-1："><a href="#输入样例-1：" class="headerlink" title="输入样例#1："></a>输入样例#1：</h5><pre><code>3 3
+3 1 2
+1 1 3 1
+2 2 3 2
+</code></pre><h5 id="输出样例-1："><a href="#输出样例-1：" class="headerlink" title="输出样例#1："></a>输出样例#1：</h5><pre><code>Yes
+</code></pre><h4 id="说明-1"><a href="#说明-1" class="headerlink" title="说明"></a>说明</h4><p>对于 100% 的数据保证：1 ≤ n，m，a，b，c ≤ 10000。</p>
+<h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4><p>这道题跟上一道很像<br>只要搞清楚约束条件，对于一般的差分约束题目还是蛮好解的<br>相较之下这道题还比较简单，只需要判一下 spfa 是否为真，并不像上一道题一样要统计答案<br>但是同样洛谷AC大视野RE debug了好久还是洛谷数据水…<br>实际上就是判负环的时候在 if 里面判…<br>还是直接上代码好了挺简单的<br>（我的建边还是和别人不一样…</p>
+<h4 id="AC代码2264ms"><a href="#AC代码2264ms" class="headerlink" title="AC代码2264ms"></a>AC代码2264ms</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// luogu-judger-enable-o2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cctype&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> re register int</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> xep(i,x) for(re i=head[x];i;i=nxt[i])</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> X=<span class="number">0</span>,w=<span class="number">0</span>; <span class="keyword">char</span> ch=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(!<span class="built_in">isdigit</span>(ch)) &#123;w|=ch==<span class="string">'-'</span>;ch=getchar();&#125;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">isdigit</span>(ch)) X=(X&lt;&lt;<span class="number">3</span>)+(X&lt;&lt;<span class="number">1</span>)+(ch^<span class="number">48</span>),ch=getchar();</span><br><span class="line">    <span class="keyword">return</span> w?-X:X;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N=<span class="number">10010</span>;</span><br><span class="line"><span class="keyword">int</span> n,m,cnt=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> head[N&lt;&lt;<span class="number">2</span>],nxt[N&lt;&lt;<span class="number">2</span>],to[N&lt;&lt;<span class="number">2</span>],val[N&lt;&lt;<span class="number">2</span>];</span><br><span class="line"><span class="keyword">int</span> sum[N],vis[N],ru[N];</span><br><span class="line"><span class="built_in">queue</span> &lt; <span class="keyword">int</span> &gt; q;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y,<span class="keyword">int</span> v)</span></span>&#123;</span><br><span class="line">    to[++cnt]=y;nxt[cnt]=head[x];</span><br><span class="line">    head[x]=cnt;val[cnt]=v;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">bool</span> <span class="title">spfa</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(!q.empty())&#123;</span><br><span class="line">        <span class="keyword">int</span> u=q.front();q.pop();</span><br><span class="line">        vis[u]=<span class="number">0</span>;</span><br><span class="line">        xep(i,u)&#123;</span><br><span class="line">            <span class="keyword">int</span> v=to[i];</span><br><span class="line">            <span class="keyword">if</span>(sum[v]&lt;sum[u]+val[i])&#123;</span><br><span class="line">                sum[v]=sum[u]+val[i];</span><br><span class="line">                ru[i]++;</span><br><span class="line">                <span class="keyword">if</span>(ru[i]&gt;n) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">if</span>(!vis[v]) </span><br><span class="line">                    vis[v]=<span class="number">1</span>,q.push(v);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(sum,<span class="number">0</span>,<span class="keyword">sizeof</span>(sum));</span><br><span class="line">    n=read();m=read();</span><br><span class="line">    <span class="keyword">for</span>(re i=<span class="number">1</span>;i&lt;=m;i++)&#123;</span><br><span class="line">        <span class="keyword">int</span> opt,a,b,c;</span><br><span class="line">        opt=read();a=read();b=read();</span><br><span class="line">        <span class="keyword">if</span>(opt==<span class="number">1</span>) c=read(),add(b,a,c);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(opt==<span class="number">2</span>) c=read(),add(a,b,-c);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(opt==<span class="number">3</span>) add(a,b,<span class="number">0</span>),add(b,a,<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(re i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">        vis[i]=<span class="number">1</span>,q.push(i);</span><br><span class="line">    spfa()?<span class="built_in">puts</span>(<span class="string">"Yes"</span>):<span class="built_in">puts</span>(<span class="string">"No"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>看到很多不等式就要想到差分约束…<br>想到差分约束转化一下不等式建边还是很容易的<br>建完边跑最短路或最长路不就很简单了？<br>所以上面三句话就是差分约束的精髓（滑稽<br>这东西还是蛮基础也是挺有用的<br>写了一个多小时也是挺久的手打很累…<br>也就是因为下午做到了两道模板的差分约束</p>
+<p>欢迎指正联系方式如下…</p>
+<p>qq： 953559040</p>
+<p>微博： IncinblePan</p>
+<p>洛谷： SherlockPan</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/23/sdoi2011/" rel="next" title="SDOI2011 染色">
+                <i class="fa fa-chevron-left"></i> SDOI2011 染色
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Sherlock Pan" />
+            
+              <p class="site-author-name" itemprop="name">Sherlock Pan</p>
+              <p class="site-description motion-element" itemprop="description">每个人为不同的理由戴着面具说谎，动机也只有一个名字那叫做欲望</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/6002851702/profile?topnav=1&wvr=6" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-globe"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/sherlock-76-85/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简述差分约束"><span class="nav-number">2.</span> <span class="nav-text">简述差分约束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SCOI2011-糖果"><span class="nav-number">3.</span> <span class="nav-text">SCOI2011 糖果</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述"><span class="nav-number">3.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输入输出格式"><span class="nav-number">3.2.</span> <span class="nav-text">输入输出格式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#输入格式："><span class="nav-number">3.2.1.</span> <span class="nav-text">输入格式：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#输出格式："><span class="nav-number">3.2.2.</span> <span class="nav-text">输出格式：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输入输出样例"><span class="nav-number">3.3.</span> <span class="nav-text">输入输出样例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#说明"><span class="nav-number">3.4.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解题分析"><span class="nav-number">3.5.</span> <span class="nav-text">解题分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AC代码96ms"><span class="nav-number">3.6.</span> <span class="nav-text">AC代码96ms</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BZOJ3436-小K的农场"><span class="nav-number">4.</span> <span class="nav-text">BZOJ3436 小K的农场</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述-1"><span class="nav-number">4.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输入输出格式-1"><span class="nav-number">4.2.</span> <span class="nav-text">输入输出格式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#输入格式：-1"><span class="nav-number">4.2.1.</span> <span class="nav-text">输入格式：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#输出格式：-1"><span class="nav-number">4.2.2.</span> <span class="nav-text">输出格式：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输入输出样例-1"><span class="nav-number">4.3.</span> <span class="nav-text">输入输出样例</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#输入样例-1："><span class="nav-number">4.3.1.</span> <span class="nav-text">输入样例#1：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#输出样例-1："><span class="nav-number">4.3.2.</span> <span class="nav-text">输出样例#1：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#说明-1"><span class="nav-number">4.4.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解题思路"><span class="nav-number">4.5.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AC代码2264ms"><span class="nav-number">4.6.</span> <span class="nav-text">AC代码2264ms</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后记"><span class="nav-number">5.</span> <span class="nav-text">后记</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sherlock Pan</span>
+
+  
+</div>
+
+
+
+  <div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共27.8k字</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
