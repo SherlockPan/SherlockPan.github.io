@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB;
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB;
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB; 
+        border-left-color: #1E92FB; 
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言数论知识…一定是我太菜了所以不敢写莫比乌斯反演… 莫比乌斯函数还是蛮好理解的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="莫比乌斯函数">
+<meta property="og:url" content="http://yoursite.com/2018/05/26/莫比乌斯函数/index.html">
+<meta property="og:site_name" content="Sherlock小蒟蒻">
+<meta property="og:description" content="前言数论知识…一定是我太菜了所以不敢写莫比乌斯反演… 莫比乌斯函数还是蛮好理解的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/XPVLejT.png">
+<meta property="og:image" content="https://i.imgur.com/hRVXaCW.png">
+<meta property="og:image" content="https://i.imgur.com/17xLsdM.png">
+<meta property="og:image" content="https://i.imgur.com/UdOCM1z.png">
+<meta property="og:image" content="https://i.imgur.com/fmcaA7c.png">
+<meta property="og:image" content="https://i.imgur.com/ixLvTQ3.png">
+<meta property="og:image" content="https://i.imgur.com/CUSy7wx.png">
+<meta property="og:image" content="https://i.imgur.com/DLvsfT4.png">
+<meta property="og:image" content="https://i.imgur.com/47lK75g.png">
+<meta property="og:image" content="https://i.imgur.com/9Xb73zD.png">
+<meta property="og:image" content="https://i.imgur.com/w3qzUwG.png">
+<meta property="og:image" content="https://i.imgur.com/31liV3W.png">
+<meta property="og:image" content="https://i.imgur.com/pJv1vTG.png">
+<meta property="og:updated_time" content="2018-05-26T11:25:42.211Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="莫比乌斯函数">
+<meta name="twitter:description" content="前言数论知识…一定是我太菜了所以不敢写莫比乌斯反演… 莫比乌斯函数还是蛮好理解的">
+<meta name="twitter:image" content="https://i.imgur.com/XPVLejT.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/26/莫比乌斯函数/"/>
+
+
+
+
+
+  <title>莫比乌斯函数 | Sherlock小蒟蒻</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sherlock小蒟蒻</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/26/莫比乌斯函数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sherlock Pan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sherlock小蒟蒻">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">莫比乌斯函数</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-26T17:12:01+08:00">
+                2018-05-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,381
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  11
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>数论知识…一定是我太菜了所以不敢写莫比乌斯反演…</p>
+<p>莫比乌斯函数还是蛮好理解的</p>
+<a id="more"></a>
+<p><strong>侵删</strong></p>
+<h3 id="浅析莫比乌斯函数"><a href="#浅析莫比乌斯函数" class="headerlink" title="浅析莫比乌斯函数"></a>浅析莫比乌斯函数</h3><p>莫比乌斯看样子很高大上</p>
+<p>我们第一次了解到莫比乌斯是在小学时候，那时候书上有个东西叫做莫比乌斯环好像可以折射出很多现实意义</p>
+<p>不过我们不会考虑这些现实意义我们来看一下莫比乌斯函数</p>
+<h4 id="莫比乌斯反演的引用"><a href="#莫比乌斯反演的引用" class="headerlink" title="莫比乌斯反演的引用"></a>莫比乌斯反演的引用</h4><p>我不是很了解这个东西…<br>我们先来看一下一些式子</p>
+<p>我们设 f(x), g(x) 为定义在正整数集合上的两个函数，满足</p>
+<blockquote>
+<p><strong>∑<sub>d|n</sub>g(d)</strong> </p>
+</blockquote>
+<p>我们将就看一下<br>根据定义，我们可以知道<br>$\sum$<br><img src="https://i.imgur.com/XPVLejT.png" alt=""></p>
+<p>根据 f(n) 推出 g(n) </p>
+<p><img src="https://i.imgur.com/hRVXaCW.png" alt=""></p>
+<p>我们继续观察，发现以下规律（依旧拉图片…</p>
+<p><img src="https://i.imgur.com/17xLsdM.png" alt=""></p>
+<p>上面的？部分与 d 没有直接关系，而是与 <sup>n</sup>/<sub>d</sub> 有关，是<sup>n</sup>/<sub>d</sub> 对应的某个函数值,记为 μ（<sup>n</sup>/<sub>d</sub>），我们称这个函数为莫比乌斯函数，在解决 gcd 问题上很有帮助</p>
+<h4 id="反演？"><a href="#反演？" class="headerlink" title="反演？"></a>反演？</h4><p>我们看一下观察出来的规律</p>
+<p><img src="https://i.imgur.com/UdOCM1z.png" alt=""></p>
+<p>我们令</p>
+<p><img src="https://i.imgur.com/fmcaA7c.png" alt=""></p>
+<p>也可以写成</p>
+<p><img src="https://i.imgur.com/ixLvTQ3.png" alt=""></p>
+<p>因此我们把下式称之为莫比乌斯反演</p>
+<p><img src="https://i.imgur.com/CUSy7wx.png" alt=""></p>
+<p>观察前面的例子，我们可以找到部分莫比乌斯函数的值</p>
+<p><img src="https://i.imgur.com/DLvsfT4.png" alt=""></p>
+<p>所以我们来看一下 μ（d）的定义</p>
+<ol>
+<li>若d=1，则 μ（d）=1</li>
+<li>若d=p1·p2·p3·…·pk，其中 p(0&lt;=i&lt;=k)为互异的素数，则 μ(d) =(-1)<sup>k</sup></li>
+<li>对于其余情况 μ(d)=0</li>
+</ol>
+<p>我们再来看几个莫比乌斯函数的性质</p>
+<p><img src="https://i.imgur.com/47lK75g.png" alt=""></p>
+<p><img src="https://i.imgur.com/9Xb73zD.png" alt=""></p>
+<p>好了就这样随便看看好了不给证明</p>
+<p>综上所述，莫比乌斯反演就是指一下式子…</p>
+<p><img src="https://i.imgur.com/w3qzUwG.png" alt=""></p>
+<p>怎么用我也不怎么会…</p>
+<p>我们再来看一下他的两种变形（全部自己去证（我菜啊逃~</p>
+<p><img src="https://i.imgur.com/31liV3W.png" alt=""></p>
+<p>还有一个反演的性质</p>
+<p><img src="https://i.imgur.com/pJv1vTG.png" alt=""></p>
+<p>这种东西记记好了考试又不会给自己证…<br>另外很多关于数论的题目只用莫比乌斯是不够的可能还要加上数论分块…</p>
+<h4 id="线性求莫比乌斯函数"><a href="#线性求莫比乌斯函数" class="headerlink" title="线性求莫比乌斯函数"></a>线性求莫比乌斯函数</h4><p>所以我们稀里糊涂讲了那么多，来看一下怎么用线性的时间求出莫比乌斯函数</p>
+<p>我们已经知道， μ（n）是积性函数，所以可以用类似欧拉筛的方式在线性的时间内求出莫比乌斯函数</p>
+<p>莫比乌斯函数要么是0要么是1要么是-1，而且判断这个数对应的莫比乌斯函数在它的性质里也讲过了，因此，在欧拉筛的基础上，我们求莫比乌斯函数就很方便了…</p>
+<p>口糊了那么多，直接看代码好了</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> isprime[<span class="number">10000010</span>];</span><br><span class="line"><span class="keyword">int</span> cnt=<span class="number">0</span>,prime[<span class="number">5000010</span>],mu[<span class="number">10000010</span>];</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">	<span class="built_in">memset</span>(isprime,<span class="number">1</span>,<span class="keyword">sizeof</span>(isprime));</span><br><span class="line">	mu[<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">register</span> <span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=x;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(isprime[i])&#123;</span><br><span class="line">			prime[++cnt]=i;mu[i]=<span class="number">-1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">register</span> <span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=cnt;j++)&#123;</span><br><span class="line">			<span class="keyword">long</span> <span class="keyword">long</span> t=prime[j]*i;</span><br><span class="line">			<span class="keyword">if</span>(t&gt;x) <span class="keyword">break</span>;</span><br><span class="line">			isprime[t]=<span class="number">0</span>;</span><br><span class="line">			<span class="keyword">if</span>(i%prime[j]==<span class="number">0</span>)&#123;</span><br><span class="line">				mu[t]=<span class="number">0</span>;<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> mu[t]=-mu[i];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>整体上看是和欧拉筛差不多的…</p>
+<p>另外在做莫比乌斯的题目时，我们要灵活应用反演变化，用反演把时间复杂度降低。对于一些很难求的东西，我们可以先求出简单的东西，再反演推导到我们要求的东西上</p>
+<p>从网上找了四个要点…</p>
+<blockquote>
+<p>公式推导：利用莫比乌斯反演推导出基本式子</p>
+</blockquote>
+<blockquote>
+<p>等价变换：变量替换，内层外移等技巧</p>
+</blockquote>
+<blockquote>
+<p>线性筛法：线性筛法功能强大，可以根据需要预处理各种信息</p>
+</blockquote>
+<blockquote>
+<p>分块处理：归结到最后，通过分块处理在根号n内实现</p>
+</blockquote>
+<p>具体内容还是在题目里见吧</p>
+<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><h4 id="BZOJ1101"><a href="#BZOJ1101" class="headerlink" title="BZOJ1101"></a>BZOJ1101</h4><h5 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h5><p>　　<br>FGD正在破解一段密码，他需要回答很多类似的问题：对于给定的整数a,b和d，有多少正整数对x,y，满足x&lt;=a<br>，y&lt;=b，并且gcd(x,y)=d。作为FGD的同学，FGD希望得到你的帮助。</p>
+<h5 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h5><p>　　第一行包含一个正整数n，表示一共有n组询问。（1&lt;=n&lt;= 50000）接下来n行，每行表示一个询问，每行三个<br>正整数，分别为a,b,d。（1&lt;=d&lt;=a,b&lt;=50000）</p>
+<h5 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h5><p>　　对于每组询问，输出到输出文件zap.out一个正整数，表示满足条件的整数对数。</p>
+<h5 id="样例输入"><a href="#样例输入" class="headerlink" title="样例输入"></a>样例输入</h5><pre><code>2
+4 5 2
+6 4 3
+</code></pre><h5 id="样例输出"><a href="#样例输出" class="headerlink" title="样例输出"></a>样例输出</h5><pre><code>3
+2
+</code></pre><p>//对于第一组询问，满足条件的整数对有(2,2)，（2,4），（4，2）。对于第二组询问，满足条件的整数对有（<br>6,3），（3,3）。</p>
+<h5 id="解题分析"><a href="#解题分析" class="headerlink" title="解题分析"></a>解题分析</h5><p>很接近板子题<br>先预处理每个数的莫比乌斯函数值<br>设f(i)=gcd(x,y)=i的数对个数，所求即为f(1)<br>构造一个和它满足莫比乌斯反演的函数 F= gcd(x,y)=i的倍数 的数对个数<br>然后我们可以得到反演方程（makedown不能打\sum…望体谅<br>另外一个函数的值还是很好求的。。。<br>进行求前缀和和数论分块…<br>如果不这样做的话只有70分<br>所以重要的东西代码里见</p>
+<h5 id="AC代码4164ms"><a href="#AC代码4164ms" class="headerlink" title="AC代码4164ms"></a>AC代码4164ms</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// luogu-judger-enable-o2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cctype&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> X=<span class="number">0</span>,w=<span class="number">0</span>; <span class="keyword">char</span> ch=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(!<span class="built_in">isdigit</span>(ch)) &#123;w|=ch==<span class="string">'-'</span>;ch=getchar();&#125;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">isdigit</span>(ch)) X=(X&lt;&lt;<span class="number">3</span>)+(X&lt;&lt;<span class="number">1</span>)+(ch^<span class="number">48</span>),ch=getchar();</span><br><span class="line">    <span class="keyword">return</span> w?-X:X;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N=<span class="number">50010</span>;</span><br><span class="line"><span class="keyword">int</span> k,cnt=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">bool</span> isprime[N];</span><br><span class="line"><span class="keyword">int</span> prime[N],mu[N],sum[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(isprime,<span class="number">1</span>,<span class="keyword">sizeof</span>(isprime));</span><br><span class="line">    mu[<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">register</span> <span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=x;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(isprime[i])&#123;</span><br><span class="line">            prime[++cnt]=i;mu[i]=<span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">register</span> <span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=cnt;j++)&#123;</span><br><span class="line">            <span class="keyword">long</span> <span class="keyword">long</span> t=prime[j]*i;</span><br><span class="line">            <span class="keyword">if</span>(t&gt;x) <span class="keyword">break</span>;</span><br><span class="line">            isprime[t]=<span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span>(i%prime[j]==<span class="number">0</span>)&#123;</span><br><span class="line">                mu[t]=<span class="number">0</span>;<span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> mu[t]=-mu[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">register</span> <span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=x;i++) sum[i]=sum[i<span class="number">-1</span>]+mu[i];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    k=read();</span><br><span class="line">    init(N);</span><br><span class="line">    <span class="keyword">while</span>(k--)&#123;</span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">long</span> <span class="keyword">long</span> a,b,d;</span><br><span class="line">        a=read();b=read();d=read();</span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">long</span> <span class="keyword">long</span> max_rep,ans;</span><br><span class="line">        max_rep=min(a,b);ans=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">long</span> <span class="keyword">long</span> l=<span class="number">1</span>,r;l&lt;=max_rep;l=r+<span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            r=min(a/(a/l),b/(b/l));</span><br><span class="line">            ans+=(a/(l*d))*(b/(l*d))*(sum[r]-sum[l<span class="number">-1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%lld\n"</span>,ans);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="HAOI2011-Problem-B"><a href="#HAOI2011-Problem-B" class="headerlink" title="HAOI2011 Problem B"></a>HAOI2011 Problem B</h4><h5 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h5><p>对于给出的n个询问，每次求有多少个数对(x,y)，满足a≤x≤b，c≤y≤d，且gcd(x,y) = k，gcd(x,y)函数为x和y的最大公约数。</p>
+<h5 id="输入输出格式"><a href="#输入输出格式" class="headerlink" title="输入输出格式"></a>输入输出格式</h5><h6 id="输入格式："><a href="#输入格式：" class="headerlink" title="输入格式："></a>输入格式：</h6><p>第一行一个整数n，接下来n行每行五个整数，分别表示a、b、c、d、k</p>
+<h6 id="输出格式："><a href="#输出格式：" class="headerlink" title="输出格式："></a>输出格式：</h6><p>共n行，每行一个整数表示满足要求的数对(x,y)的个数</p>
+<h5 id="输入输出样例"><a href="#输入输出样例" class="headerlink" title="输入输出样例"></a>输入输出样例</h5><h6 id="输入样例-1："><a href="#输入样例-1：" class="headerlink" title="输入样例#1："></a>输入样例#1：</h6><pre><code>2
+2 5 1 5 1
+1 5 1 5 2
+</code></pre><h6 id="输出样例-1："><a href="#输出样例-1：" class="headerlink" title="输出样例#1："></a>输出样例#1：</h6><pre><code>14
+3
+</code></pre><h5 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h5><p>100%的数据满足：1≤n≤50000，1≤a≤b≤50000，1≤c≤d≤50000，1≤k≤50000</p>
+<h5 id="解题分析-1"><a href="#解题分析-1" class="headerlink" title="解题分析"></a>解题分析</h5><p>只能说跟上次差不多<br>也是一道很基础的连莫比乌斯函数的题<br>继续构造莫比乌斯反演的函数<br>但是这道题我们用到了容斥原理<br>就是那些学生参加各种兴趣小组类型的题目，问一共会有多少个学生什么什么的<br>小学的奥数题成为oi的元素也是一番趣味<br>求题目中的个数，就是求出ans=(b,d)-(a-1,d)-(c,b-1)+(a-1,b-1)<br>就是每询问一次要做类似的操作四次<br>也是要加上数论分块和前缀和的不然会T<br>不多比比上代码</p>
+<h5 id="AC代码11980ms"><a href="#AC代码11980ms" class="headerlink" title="AC代码11980ms"></a>AC代码11980ms</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// luogu-judger-enable-o2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cctype&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> re register int</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ll long long </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> X=<span class="number">0</span>,w=<span class="number">0</span>; <span class="keyword">char</span> ch=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(!<span class="built_in">isdigit</span>(ch)) &#123;w|=ch==<span class="string">'-'</span>;ch=getchar();&#125;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">isdigit</span>(ch)) X=(X&lt;&lt;<span class="number">3</span>)+(X&lt;&lt;<span class="number">1</span>)+(ch^<span class="number">48</span>),ch=getchar();</span><br><span class="line">    <span class="keyword">return</span> w?-X:X;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N=<span class="number">50010</span>;</span><br><span class="line"><span class="keyword">int</span> n,a,b,c,d,k,cnt=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> pri[N],mu[N];</span><br><span class="line"><span class="keyword">bool</span> isp[N];</span><br><span class="line">ll sum[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;</span><br><span class="line">    mu[<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(re i=<span class="number">2</span>;i&lt;=N;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(!isp[i])&#123;</span><br><span class="line">            pri[++cnt]=i;mu[i]=<span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> t;</span><br><span class="line">        <span class="keyword">for</span>(re j=<span class="number">1</span>;(t=pri[j]*i)&lt;=N&amp;&amp;j&lt;=cnt;j++)&#123;</span><br><span class="line">            isp[t]=<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span>(i%pri[j]==<span class="number">0</span>)&#123;</span><br><span class="line">                mu[t]=<span class="number">0</span>;<span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> mu[t]=-mu[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(re i=<span class="number">1</span>;i&lt;=N;i++) sum[i]=sum[i<span class="number">-1</span>]+mu[i];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> ll <span class="title">solve</span><span class="params">(ll n,ll m)</span></span>&#123;</span><br><span class="line">    n/=k; m/=k;</span><br><span class="line">    <span class="keyword">if</span>(n&gt;m) swap(n,m); <span class="keyword">if</span>(n==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    ll i,next1,next2,next;</span><br><span class="line">    ll tot=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=n;i=next) &#123;</span><br><span class="line">        next1=n/(n/i); next2=m/(m/i);</span><br><span class="line">        next=min(next1,next2);</span><br><span class="line">        tot+=(n/i)*(m/i)*(sum[next]-sum[i<span class="number">-1</span>]);</span><br><span class="line">        next++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> tot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    n=read();</span><br><span class="line">    init();</span><br><span class="line">    <span class="keyword">while</span>(n--)&#123;</span><br><span class="line">        a=read();b=read();c=read();</span><br><span class="line">        d=read();k=read();</span><br><span class="line">        ll ans=solve(b,d)-solve(a<span class="number">-1</span>,d)-solve(b,c<span class="number">-1</span>)+solve(a<span class="number">-1</span>,c<span class="number">-1</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%lld\n"</span>,ans);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>这玩意还是比较深奥的在高层次的oi中也是很重要的一个考点<br>所以我很菜看了很久反演也不会导<br>这篇文章我应该是说写的很潦草了…<br>算了算了重要的东西在就行了<br>欢迎指正联系方式如下…</p>
+<p>qq： 953559040</p>
+<p>微博： IncinblePan</p>
+<p>洛谷： SherlockPan</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/25/差分约束/" rel="next" title="差分约束例题">
+                <i class="fa fa-chevron-left"></i> 差分约束例题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Sherlock Pan" />
+            
+              <p class="site-author-name" itemprop="name">Sherlock Pan</p>
+              <p class="site-description motion-element" itemprop="description">每个人为不同的理由戴着面具说谎，动机也只有一个名字那叫做欲望</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/6002851702/profile?topnav=1&wvr=6" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-globe"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/sherlock-76-85/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浅析莫比乌斯函数"><span class="nav-number">2.</span> <span class="nav-text">浅析莫比乌斯函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#莫比乌斯反演的引用"><span class="nav-number">2.1.</span> <span class="nav-text">莫比乌斯反演的引用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#反演？"><span class="nav-number">2.2.</span> <span class="nav-text">反演？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线性求莫比乌斯函数"><span class="nav-number">2.3.</span> <span class="nav-text">线性求莫比乌斯函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题目"><span class="nav-number">3.</span> <span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#BZOJ1101"><span class="nav-number">3.1.</span> <span class="nav-text">BZOJ1101</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#题目描述"><span class="nav-number">3.1.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#输入"><span class="nav-number">3.1.2.</span> <span class="nav-text">输入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#输出"><span class="nav-number">3.1.3.</span> <span class="nav-text">输出</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#样例输入"><span class="nav-number">3.1.4.</span> <span class="nav-text">样例输入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#样例输出"><span class="nav-number">3.1.5.</span> <span class="nav-text">样例输出</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解题分析"><span class="nav-number">3.1.6.</span> <span class="nav-text">解题分析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#AC代码4164ms"><span class="nav-number">3.1.7.</span> <span class="nav-text">AC代码4164ms</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HAOI2011-Problem-B"><span class="nav-number">3.2.</span> <span class="nav-text">HAOI2011 Problem B</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#题目描述-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#输入输出格式"><span class="nav-number">3.2.2.</span> <span class="nav-text">输入输出格式</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#输入格式："><span class="nav-number">3.2.2.1.</span> <span class="nav-text">输入格式：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#输出格式："><span class="nav-number">3.2.2.2.</span> <span class="nav-text">输出格式：</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#输入输出样例"><span class="nav-number">3.2.3.</span> <span class="nav-text">输入输出样例</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#输入样例-1："><span class="nav-number">3.2.3.1.</span> <span class="nav-text">输入样例#1：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#输出样例-1："><span class="nav-number">3.2.3.2.</span> <span class="nav-text">输出样例#1：</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#说明"><span class="nav-number">3.2.4.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解题分析-1"><span class="nav-number">3.2.5.</span> <span class="nav-text">解题分析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#AC代码11980ms"><span class="nav-number">3.2.6.</span> <span class="nav-text">AC代码11980ms</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后记"><span class="nav-number">4.</span> <span class="nav-text">后记</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sherlock Pan</span>
+
+  
+</div>
+
+
+
+  <div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共30.2k字</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
