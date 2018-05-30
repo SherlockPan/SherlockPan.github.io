@@ -109,7 +109,7 @@
 <meta property="og:description" content="前言随便写写尽量保持日更…（我觉得做不到">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/Sz839QA.png">
-<meta property="og:updated_time" content="2018-05-28T12:51:26.073Z">
+<meta property="og:updated_time" content="2018-05-29T23:17:03.479Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分层图最短路">
 <meta name="twitter:description" content="前言随便写写尽量保持日更…（我觉得做不到">
@@ -317,7 +317,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2,455
+                  2,449
                 </span>
               
 
@@ -363,9 +363,9 @@
 <p>我们考虑DP的思想 用 dp[i][j] 表示从起点跑到点 i 并且使用了 k 次改变后得到的最小距离，跑法也是 spfa 不过我们需要考虑一些别的东西</p>
 <p>对于询问到下一个点，我们有两种选择，一种是不用变化，一种是用变换<br>我们先跑一次 spfa ，这一次我们不进行变换<br>我们在跑完这一次 for 循环之后再跑一次，这一次表示的是我们进行变换      dp[to[u]][k+1]=dp[u][k]; 转移方程很好想<br>本身这个东西随便讲一下就懂了的，所以以下有两道模板题，我们来看一下</p>
 <hr>
-<h3 id="BZOJ2763"><a href="#BZOJ2763" class="headerlink" title="BZOJ2763"></a>BZOJ2763</h3><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>Alice和Bob现在要乘飞机旅行，他们选择了一家相对便宜的航空公司。该航空公司一共在 nn 个城市设有业务，设这些城市分别标记为 00 到 n-1n−1 ，一共有 mm 种航线，每种航线连接两个城市，并且航线有一定的价格。</p>
-<p>Alice和Bob现在要从一个城市沿着航线到达另一个城市，途中可以进行转机。航空公司对他们这次旅行也推出优惠，他们可以免费在最多 kk 种航线上搭乘飞机。那么Alice和Bob这次出行最少花费多少？</p>
-<h4 id="输入输出格式"><a href="#输入输出格式" class="headerlink" title="输入输出格式"></a>输入输出格式</h4><h5 id="输入格式："><a href="#输入格式：" class="headerlink" title="输入格式："></a>输入格式：</h5><p>数据的第一行有三个整数， n,m,kn,m,k ，分别表示城市数，航线数和免费乘坐次数。<br>第二行有两个整数， s,ts,t ，分别表示他们出行的起点城市编号和终点城市编号。<br>接下来有m行，每行三个整数， a,b,ca,b,c ，表示存在一种航线，能从城市 aa 到达城市 bb ，或从城市 bb 到达城市 aa ，价格为 cc 。</p>
+<h3 id="BZOJ2763"><a href="#BZOJ2763" class="headerlink" title="BZOJ2763"></a>BZOJ2763</h3><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>Alice和Bob现在要乘飞机旅行，他们选择了一家相对便宜的航空公司。该航空公司一共在 n 个城市设有业务，设这些城市分别标记为 0 到 n-1 ，一共有 m 种航线，每种航线连接两个城市，并且航线有一定的价格。</p>
+<p>Alice和Bob现在要从一个城市沿着航线到达另一个城市，途中可以进行转机。航空公司对他们这次旅行也推出优惠，他们可以免费在最多 k 种航线上搭乘飞机。那么Alice和Bob这次出行最少花费多少？</p>
+<h4 id="输入输出格式"><a href="#输入输出格式" class="headerlink" title="输入输出格式"></a>输入输出格式</h4><h5 id="输入格式："><a href="#输入格式：" class="headerlink" title="输入格式："></a>输入格式：</h5><p>数据的第一行有三个整数， n,m,k ，分别表示城市数，航线数和免费乘坐次数。<br>第二行有两个整数， s,t ，分别表示他们出行的起点城市编号和终点城市编号。<br>接下来有m行，每行三个整数， a,b,c ，表示存在一种航线，能从城市 a 到达城市 b ，或从城市 b 到达城市 a ，价格为 c 。</p>
 <h5 id="输出格式："><a href="#输出格式：" class="headerlink" title="输出格式："></a>输出格式：</h5><p>只有一行，包含一个整数，为最少花费。</p>
 <h4 id="输入输出样例"><a href="#输入输出样例" class="headerlink" title="输入输出样例"></a>输入输出样例</h4><h5 id="输入样例-1："><a href="#输入样例-1：" class="headerlink" title="输入样例#1："></a>输入样例#1：</h5><pre><code>5 6 1
 0 4
@@ -382,13 +382,13 @@
 <hr>
 <h3 id="BZOJ2662"><a href="#BZOJ2662" class="headerlink" title="BZOJ2662"></a>BZOJ2662</h3><h4 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h4><p>  “我要成为魔法少女！”<br>  “那么，以灵魂为代价，你希望得到什么？”<br>“我要将有关魔法和奇迹的一切，封印于卡片之中„„”   </p>
 <p>  在这个愿望被实现以后的世界里，人们享受着魔法卡片（SpellCard，又名符<br>卡）带来的便捷。 </p>
-<p>现在，不需要立下契约也可以使用魔法了！你还不来试一试？<br>  比如，我们在魔法百科全书（Encyclopedia  of  Spells）里用“freeze”作为关<br>键字来查询，会有很多有趣的结果。<br>例如，我们熟知的Cirno，她的冰冻魔法当然会有对应的 SpellCard 了。 当然，<br>更加令人惊讶的是，居然有冻结时间的魔法，Cirno 的冻青蛙比起这些来真是小<br>巫见大巫了。<br>这说明之前的世界中有很多魔法少女曾许下控制时间的愿望，比如 Akemi<br>Homura、Sakuya Izayoi、„„<br>当然，在本题中我们并不是要来研究历史的，而是研究魔法的应用。 </p>
-<p>我们考虑最简单的旅行问题吧：  现在这个大陆上有 N 个城市，M 条双向的<br>道路。城市编号为 1~N，我们在 1 号城市，需要到 N 号城市，怎样才能最快地<br>到达呢？<br>  这不就是最短路问题吗？我们都知道可以用 Dijkstra、Bellman-Ford、<br>Floyd-Warshall等算法来解决。<br>  现在，我们一共有 K 张可以使时间变慢 50%的 SpellCard，也就是说，在通<br>过某条路径时，我们可以选择使用一张卡片，这样，我们通过这一条道路的时间<br>就可以减少到原先的一半。需要注意的是： </p>
+<p>现在，不需要立下契约也可以使用魔法了！你还不来试一试？<br>  比如，我们在魔法百科全书（Encyclopedia  of  Spells）里用“freeze”作为关<br>键字来查询，会有很多有趣的结果。<br>例如，我们熟知的Cirno，她的冰冻魔法当然会有对应的 SpellCard 了。 当然，<br>更加令人惊讶的是，居然有冻结时间的魔法，Cirno 的冻青蛙比起这些来真是小<br>巫见大巫了。<br>这说明之前的世界中有很多魔法少女曾许下控制时间的愿望，比如 Akemi Homura、Sakuya Izayoi、„„<br>当然，在本题中我们并不是要来研究历史的，而是研究魔法的应用。 </p>
+<p>我们考虑最简单的旅行问题吧：  现在这个大陆上有 N 个城市，M 条双向的道路。城市编号为 1~N，我们在 1 号城市，需要到 N 号城市，怎样才能最快地到达呢？<br>  这不就是最短路问题吗？我们都知道可以用 Dijkstra、Bellman-Ford、Floyd-Warshall等算法来解决。<br>  现在，我们一共有 K 张可以使时间变慢 50%的 SpellCard，也就是说，在通过某条路径时，我们可以选择使用一张卡片，这样，我们通过这一条道路的时间就可以减少到原先的一半。需要注意的是： </p>
 <ol>
 <li>在一条道路上最多只能使用一张 SpellCard。 </li>
 <li>使用一张SpellCard 只在一条道路上起作用。 </li>
 <li><p>你不必使用完所有的 SpellCard。 </p>
-<p>给定以上的信息，你的任务是：求出在可以使用这不超过 K 张时间减速的<br>SpellCard 之情形下，从城市1 到城市N最少需要多长时间。</p>
+<p>给定以上的信息，你的任务是：求出在可以使用这不超过 K 张时间减速的SpellCard 之情形下，从城市1 到城市N最少需要多长时间。</p>
 </li>
 </ol>
 <h4 id="Input"><a href="#Input" class="headerlink" title="Input"></a>Input</h4><p>第一行包含三个整数：N、M、K。<br>接下来 M 行，每行包含三个整数：Ai、Bi、Timei，表示存在一条 Ai与 Bi之<br>间的双向道路，在不使用 SpellCard 之前提下，通过它需要 Timei的时间。</p>
